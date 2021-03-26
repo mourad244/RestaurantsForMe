@@ -1,98 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".SecondActivity"
-    android:weightSum="8"
     >
-
-    <GridLayout
-        android:id="@+id/mainGrid"
-        android:rowCount="3"
-        android:columnCount="2"
-        android:alignmentMode="alignMargins"
-        android:columnOrderPreserved="false"
-        android:layout_weight="6"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="90dp">
-
-        <!-- ROW 1  -->
-        <!-- COLUMN 1  -->
-
-
-        <LinearLayout
-            android:layout_gravity="center_horizontal|center_vertical"
-            android:layout_margin="16dp"
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:id="@+id/img_pizza"
-                android:src="@drawable/pizza_icon"
-
-                android:contentDescription="@string/pizza"
-                />
-            <TextView
-                android:textAlignment="center"
-                android:text="pizza"
-                android:textColor="#000"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-        </LinearLayout>
-
-        <!-- COLUMN 2  -->
-
-        <LinearLayout
-            android:layout_gravity="center_horizontal|center_vertical"
-            android:layout_margin="16dp"
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:id="@+id/img_tacos"
-                android:src="@drawable/tacos_icon"
-                />
-            <TextView
-                android:textAlignment="center"
-                android:text="Tacos"
-                android:textColor="#000"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-    </GridLayout>
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="mourad"
-        />
-
     <Button
         android:id="@+id/btlogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="260dp"
         android:onClick="logout"
-        android:text="Log out"
+        android:text="Log out" />
 
-        />
+    <GridView
+        android:id="@+id/gvFood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:alignmentMode="alignMargins"
+        android:columnOrderPreserved="false"
+        android:paddingHorizontal="4dp"
+        android:paddingVertical="4dp"
+        android:layout_below="@id/btlogout"
+        >
+    </GridView>
 
-
-
-</LinearLayout>
+</RelativeLayout>

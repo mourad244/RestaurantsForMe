@@ -8,15 +8,16 @@ public class CategorieFood {
 
     public CategorieFood(){}
 
-    public CategorieFood(int image, String nom){
-        this.image = image;
+    public CategorieFood(String nom, int image ){
         this.nom = nom;
+        this.image = image;
     }
 
-    public CategorieFood(int id, int image, String nom){
+    public CategorieFood(int id,  String nom,int image){
         this.id = id;
-        this.image = image;
         this.nom = nom;
+        this.image = image;
+
     }
 
     public int getId() { return id; }

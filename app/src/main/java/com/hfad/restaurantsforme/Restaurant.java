@@ -13,6 +13,21 @@ public class Restaurant {
     private String latitude;
 
 
+    public Restaurant (){};
+
+    public Restaurant (String nom, int image, String description, String h_ouverture,
+                       String h_fermeture, String telephone, int QR_code, String longitude,
+                       String latitude){
+        this.nom = nom;
+        this.image = image;
+        this.description = description;
+        this.h_ouverture = h_ouverture;
+        this.h_fermeture = h_fermeture;
+        this.telephone = telephone;
+        this.QR_code = QR_code;
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
 
     public Restaurant (int id, String nom, int image, String description, String h_ouverture,
                        String h_fermeture, String telephone, int QR_code, String longitude,

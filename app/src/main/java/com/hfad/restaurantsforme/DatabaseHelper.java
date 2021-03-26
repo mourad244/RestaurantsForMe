@@ -53,39 +53,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Categorie_food table create statement
     private static final String CREATE_TABLE_CATEGORIE_FOOD = "CREATE TABLE "+
             TABLE_CATEGORIE_FOOD + "("+
-            KEY_ID + "INTEGER PRIMARY KEY,"+
-            KEY_NOM + "TEXT," +
-            KEY_IMAGE + "INTEGER"+")";
+            KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "+
+            KEY_NOM + " TEXT, " +
+            KEY_IMAGE + " INTEGER"+")";
 
     // Restaurant table create statement
     private static final String CREATE_TABLE_RESTAURANT = "CREATE TABLE " +
             TABLE_RESTAURANT + "(" +
-            KEY_ID + " INTEGER PRIMARY KEY," +
-            KEY_NOM + " TEXT," +
-            KEY_IMAGE + " INTEGER," +
-            KEY_DESCRIPTION + " TEXT,"+
-            KEY_H_OUVERTURE + " DATETIME,"+
-            KEY_H_FERMETURE + " DATETIME,"+
-            KEY_TELEPHONE + " TEXT,"+
-            KEY_QR_CODE + " INTEGER,"+
-            KEY_LONGITUDE + " TEXT,"+
+            KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            KEY_NOM + " TEXT, " +
+            KEY_IMAGE + " INTEGER, " +
+            KEY_DESCRIPTION + " TEXT, "+
+            KEY_H_OUVERTURE + " DATETIME, "+
+            KEY_H_FERMETURE + " DATETIME, "+
+            KEY_TELEPHONE + " TEXT, "+
+            KEY_QR_CODE + " INTEGER, "+
+            KEY_LONGITUDE + " TEXT, "+
             KEY_LATITUDE + " TEXT"+")";
 
     // Food_restaurant table create statement
     private static final String CREATE_TABLE_FOOD_RESTAURANT = "CREATE TABLE " +
             TABLE_FOOD_RESTAURANT + "(" +
-            KEY_ID + " INTEGER PRIMARY KEY," +
-            KEY_CATEGORIE_FOOD_ID + " INTEGER," +
+            KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            KEY_CATEGORIE_FOOD_ID + " INTEGER, " +
             KEY_RESTAURANT_ID + " INTEGER"+")";
 
     // Menu table create statement
     private static final String CREATE_TABLE_MENU = "CREATE TABLE " +
             TABLE_MENU + "(" +
-            KEY_ID + "INTEGER PRIMARY KEY,"+
-            KEY_NOM + "TEXT," +
-            KEY_IMAGE + "INTEGER,"+
-            KEY_DESCRIPTION + " TEXT,"+
-            KEY_PRIX + "INTEGER"+")";
+            KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "+
+            KEY_NOM + " TEXT, " +
+            KEY_IMAGE + " INTEGER, "+
+            KEY_DESCRIPTION + " TEXT, "+
+            KEY_PRIX + " INTEGER"+")";
 
     public DatabaseHelper(Context context){
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
@@ -118,20 +118,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     * Creating a categorie_food
      */
 
-    public long createCategorieFood( CategorieFood categorieFood, long[] restaurant_ids){
+    public long createCategorieFood( CategorieFood categorieFood){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NOM,categorieFood.getNom());
+        values.put(KEY_NOM, categorieFood.getNom());
         values.put(KEY_IMAGE, categorieFood.getImage());
+
+
 
         // insert row
         long categorieFood_id = db.insert(TABLE_CATEGORIE_FOOD,null,values);
 
-        // Assigning restaurants to categorie of foods
-        for (long restaurant_id : restaurant_ids){
-            createFoodRestaurant(categorieFood_id,restaurant_id);
-        }
+        db.close();
         return categorieFood_id;
     }
 
@@ -185,7 +184,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return categorieFoods;
     }
 
-    public long createRestaurant(Restaurant restaurant){
+    public long createRestaurant(Restaurant restaurant, long[] categorieFood_ids){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values= new ContentValues();
@@ -198,9 +197,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_QR_CODE, restaurant.getQR_code());
         values.put(KEY_LONGITUDE, restaurant.getLongitude());
         values.put(KEY_LATITUDE, restaurant.getLatitude());
-
         // insert row
         long restaurant_id = db.insert(TABLE_RESTAURANT,null, values);
+        // Assigning restaurants to categorie of foods
+        for (long categorieFood_id : categorieFood_ids){
+            createFoodRestaurant(categorieFood_id,restaurant_id);
+        }
+
+
         return restaurant_id;
     }
 
@@ -237,5 +241,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             } while (c.moveToNext());
         }
         return restaurants;
+    }
+
+    /*
+    Assigning a restaurant to a food categorie
+     */
+
+    public long createFoodRestaurant(long categorieFood_id, long restaurant_id){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_CATEGORIE_FOOD_ID, categorieFood_id);
+        values.put(KEY_RESTAURANT_ID, restaurant_id);
+
+        long id = db.insert(TABLE_FOOD_RESTAURANT,null, values);
+        return id;
+    }
+    /*
+    Closing database connection
+     */
+    public void closeDB(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        if( db != null && db.isOpen())
+            db.close();
     }
 }

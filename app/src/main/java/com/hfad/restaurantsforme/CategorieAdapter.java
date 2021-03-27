@@ -17,17 +17,20 @@ import java.util.List;
 
 public class CategorieAdapter extends BaseAdapter {
 
-    private Context mContext;
-    private ArrayList<> maplist =  new ArrayList<>();
+    private final String noms[];
+    private final int images[];
+    Context mContext;
 
-    public CategorieAdapter(@NonNull Context context) {
-        this.mContext = context;
-
+    public CategorieAdapter(String[] noms, int[] images, Context mContext) {
+        this.noms = noms;
+        this.images = images;
+        this.mContext = mContext;
     }
+
 
     @Override
     public int getCount() {
-        return ;
+        return 0 ;
     }
 
     @Override
@@ -42,18 +45,17 @@ public class CategorieAdapter extends BaseAdapter {
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent){
+    public View getView(int position, View convertView, ViewGroup parent){
+
         LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
+        View view = layoutInflater.inflate(R.layout.layout_grid_item_categorie, null);
 
-        convertView = layoutInflater.inflate(R.layout.layout_grid_item_categorie,parent, false);
+        ImageView imageCategorie = (ImageView) view.findViewById(R.id.iv_categorie_image);
+        TextView txtNom = (TextView) view.findViewById(R.id.tv_categorie_nom);
 
-        ImageView imageCategorie = convertView.findViewById(R.id.iv_categorie_image);
-        TextView txtNom = convertView.findViewById(R.id.tv_categorie_nom);
+        txtNom.setText(noms[position]);
+        imageCategorie.setImageResource(images[position]);
 
-
-        txtNom.setText(getItem(position).getNom());
-        imageCategorie.setImageResource(getItem(position).getImage());
-
-        return convertView;
+        return view;
     }
 }

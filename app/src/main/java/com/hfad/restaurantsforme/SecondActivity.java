@@ -8,6 +8,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
+
+import com.google.android.gms.common.util.ArrayUtils;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -52,12 +56,18 @@ public class SecondActivity extends AppCompatActivity {
         Log.d("Categorie count","Categorie Count: " + db.getAllCategorieFoods().size());
 
         categorieFoodList = db.getAllCategorieFoods();
-        db.closeDB();
-        categorieAdapter = new CategorieAdapter(this,
-                R.layout.layout_grid_item_categorie,
-                categorieFoodList);
-        gridView.setAdapter(categorieAdapter);
 
+        String[] noms = new String[categorieFoodList.size()];
+        int[] images =new int[categorieFoodList.size()];
+
+
+        for (int i=0 ; i<categorieFoodList.size();i++){
+            noms[i] = categorieFoodList.get(i).getNom();
+            images[i] = categorieFoodList.get(i).getImage();
+        }
+        db.closeDB();
+        categorieAdapter = new CategorieAdapter(noms,images,this );
+        gridView.setAdapter(categorieAdapter);
     }
 
 

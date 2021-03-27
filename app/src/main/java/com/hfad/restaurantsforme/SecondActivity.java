@@ -1,19 +1,14 @@
 package com.hfad.restaurantsforme;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
-
-import com.google.android.gms.common.util.ArrayUtils;
-
-import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 
 public class SecondActivity extends AppCompatActivity {
@@ -23,10 +18,7 @@ public class SecondActivity extends AppCompatActivity {
     DatabaseHelper db;
 
     List<CategorieFood> categorieFoodList;
-    CategorieAdapter categorieAdapter;
 
-    @BindView(R.id.gvFood)
-    GridView gridView;
 
     @Override
 
@@ -36,37 +28,43 @@ public class SecondActivity extends AppCompatActivity {
 
         db = new DatabaseHelper(getApplicationContext());
 
-        // Creating categorie of food
-        CategorieFood pizza = new CategorieFood("Pizza",R.drawable.pizza_icon);
-        CategorieFood fastFood = new CategorieFood("Fast Food",R.drawable.fastfood_icon);
-        CategorieFood tacos = new CategorieFood("Tacos",R.drawable.tacos_icon);
-        CategorieFood marocain = new CategorieFood("Marocain",R.drawable.marocain_icon);
-        CategorieFood asiatique = new CategorieFood("Asiatique",R.drawable.asiatique_icon);
-        CategorieFood italien = new CategorieFood("Italien",R.drawable.italien_icon);
+        // Check if table categorieFood is empty to add categorie of food
+        if(db.getAllCategorieFoods().isEmpty()){
+            // Creating categorie of food
+            CategorieFood pizza = new CategorieFood("Pizza",R.drawable.pizza_icon);
+            CategorieFood fastFood = new CategorieFood("Fast Food",R.drawable.fastfood_icon);
+            CategorieFood tacos = new CategorieFood("Tacos",R.drawable.tacos_icon);
+            CategorieFood marocain = new CategorieFood("Marocain",R.drawable.marocain_icon);
+            CategorieFood asiatique = new CategorieFood("Asiatique",R.drawable.asiatique_icon);
+            CategorieFood italien = new CategorieFood("Italien",R.drawable.italien_icon);
 
-        // Inserting categorie of food in db
+            // Inserting categorie of food in db
 
-        db.createCategorieFood(pizza);
-        db.createCategorieFood(fastFood);
-        db.createCategorieFood(tacos);
-        db.createCategorieFood(marocain);
-        db.createCategorieFood(asiatique);
-        db.createCategorieFood(italien);
+            db.createCategorieFood(pizza);
+            db.createCategorieFood(fastFood);
+            db.createCategorieFood(tacos);
+            db.createCategorieFood(marocain);
+            db.createCategorieFood(asiatique);
+            db.createCategorieFood(italien);
+        }
+
 
         Log.d("Categorie count","Categorie Count: " + db.getAllCategorieFoods().size());
 
         categorieFoodList = db.getAllCategorieFoods();
+        GridView gridView = (GridView) findViewById(R.id.gvFood);
+        CategorieAdapter categorieAdapter = new CategorieAdapter(categorieFoodList,this);
+        gridView.setAdapter(categorieAdapter);
 
-        String[] noms = new String[categorieFoodList.size()];
-        int[] images =new int[categorieFoodList.size()];
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent2 = new Intent(SecondActivity.this,ThirdActivity.class);
+                startActivity(intent2);
 
-        for (int i=0 ; i<categorieFoodList.size();i++){
-            noms[i] = categorieFoodList.get(i).getNom();
-            images[i] = categorieFoodList.get(i).getImage();
-        }
-        db.closeDB();
-        gridView.setAdapter(new CategorieAdapter(noms,images,this ));
+            }
+        });
     }
 
     public void logout(View view){
@@ -79,4 +77,6 @@ public class SecondActivity extends AppCompatActivity {
         Intent intent=new Intent(this, MainActivity.class);
         startActivity(intent);
     }
+
+
 }

@@ -2,8 +2,8 @@ package com.hfad.restaurantsforme;
 
 public class CategorieFood {
     private int id;
-    private int image;
     private String nom;
+    private int image;
 
 
     public CategorieFood(){}

@@ -66,11 +66,8 @@ public class SecondActivity extends AppCompatActivity {
             images[i] = categorieFoodList.get(i).getImage();
         }
         db.closeDB();
-        categorieAdapter = new CategorieAdapter(noms,images,this );
-        gridView.setAdapter(categorieAdapter);
+        gridView.setAdapter(new CategorieAdapter(noms,images,this ));
     }
-
-
 
     public void logout(View view){
         SharedPreferences sharedPrefs =getSharedPreferences(PREFS_NAME,MODE_PRIVATE);

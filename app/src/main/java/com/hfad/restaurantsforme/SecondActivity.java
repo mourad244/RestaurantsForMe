@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -49,7 +50,7 @@ public class SecondActivity extends AppCompatActivity {
         }
 
 
-        Log.d("Categorie count","Categorie Count: " + db.getAllCategorieFoods().size());
+//        Log.d("Categorie count","Categorie Count: " + db.getAllCategorieFoods().size());
 
         categorieFoodList = db.getAllCategorieFoods();
         GridView gridView = (GridView) findViewById(R.id.gvFood);
@@ -61,9 +62,11 @@ public class SecondActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 GridView gridView2 = (GridView) findViewById(R.id.gvFood);
-                gridView2.
+
+
                 Intent intent2 = new Intent(SecondActivity.this,ThirdActivity.class);
-                intent2.putExtra("food_categorie",)
+                int categorieFood_id = categorieFoodList.get(position).getId();
+                intent2.putExtra("foodCategorie_id",categorieFood_id);
                 startActivity(intent2);
             }
         });

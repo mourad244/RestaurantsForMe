@@ -53,14 +53,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Categorie_food table create statement
     private static final String CREATE_TABLE_CATEGORIE_FOOD = "CREATE TABLE "+
             TABLE_CATEGORIE_FOOD + "("+
-            KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "+
+            KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "+
             KEY_NOM + " TEXT, " +
             KEY_IMAGE + " INTEGER"+")";
 
     // Restaurant table create statement
     private static final String CREATE_TABLE_RESTAURANT = "CREATE TABLE " +
             TABLE_RESTAURANT + "(" +
-            KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
             KEY_NOM + " TEXT, " +
             KEY_IMAGE + " INTEGER, " +
             KEY_DESCRIPTION + " TEXT, "+
@@ -74,14 +74,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Food_restaurant table create statement
     private static final String CREATE_TABLE_FOOD_RESTAURANT = "CREATE TABLE " +
             TABLE_FOOD_RESTAURANT + "(" +
-            KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
             KEY_CATEGORIE_FOOD_ID + " INTEGER, " +
             KEY_RESTAURANT_ID + " INTEGER"+")";
 
     // Menu table create statement
     private static final String CREATE_TABLE_MENU = "CREATE TABLE " +
             TABLE_MENU + "(" +
-            KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "+
+            KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "+
             KEY_NOM + " TEXT, " +
             KEY_IMAGE + " INTEGER, "+
             KEY_DESCRIPTION + " TEXT, "+
@@ -139,29 +139,44 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     get restaurant having of a categorie food
      */
 
-    public Restaurant getFoodRestaurants(long categorieFood_id){
+    public List<Restaurant> getFoodRestaurants(long categorieFood_id){
+        List<Restaurant> restaurants = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        String selectedQuery = "SELECT * FROM " + TABLE_FOOD_RESTAURANT + " WHERE " +
-                KEY_RESTAURANT_ID + " = " + categorieFood_id;
+        String selectedQuery =" SELECT * FROM " + TABLE_RESTAURANT + " INNER JOIN "
+                + TABLE_FOOD_RESTAURANT + " ON " + TABLE_RESTAURANT + "." + KEY_ID +
+                " = " + TABLE_FOOD_RESTAURANT + "." + KEY_RESTAURANT_ID + " AND " +
+                KEY_CATEGORIE_FOOD_ID + " = " + categorieFood_id;
+
+//        String selectedQuery = "SELECT * FROM " + TABLE_FOOD_RESTAURANT + " WHERE " +
+//                KEY_CATEGORIE_FOOD_ID + " = " + categorieFood_id;
+
         Log.e(LOG, selectedQuery);
+
         Cursor c = db.rawQuery(selectedQuery,null);
 
-        if(c != null)
-            c.moveToFirst();
 
-        Restaurant restaurant = new Restaurant();
-        restaurant.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-        restaurant.setNom(c.getString(c.getColumnIndex(KEY_NOM)));
-        restaurant.setImage(c.getInt(c.getColumnIndex(KEY_IMAGE)));
-        restaurant.setDescription(c.getString(c.getColumnIndex(KEY_DESCRIPTION)));
-        restaurant.setH_fermeture(c.getString(c.getColumnIndex(KEY_H_FERMETURE)));
-        restaurant.setH_ouverture(c.getString(c.getColumnIndex(KEY_H_OUVERTURE)));
-        restaurant.setTelephone(c.getString(c.getColumnIndex(KEY_TELEPHONE)));
-        restaurant.setQR_code(c.getInt(c.getColumnIndex(KEY_QR_CODE)));
-        restaurant.setLongitude(c.getString(c.getColumnIndex(KEY_LONGITUDE)));
-        restaurant.setLatitude(c.getString(c.getColumnIndex(KEY_LATITUDE)));
 
-        return restaurant;
+        if(c.moveToFirst()){
+            do{
+                Restaurant restaurant = new Restaurant();
+                restaurant.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+                restaurant.setNom(c.getString(c.getColumnIndex(KEY_NOM)));
+                restaurant.setImage(c.getInt(c.getColumnIndex(KEY_IMAGE)));
+                restaurant.setDescription(c.getString(c.getColumnIndex(KEY_DESCRIPTION)));
+                restaurant.setH_fermeture(c.getString(c.getColumnIndex(KEY_H_FERMETURE)));
+                restaurant.setH_ouverture(c.getString(c.getColumnIndex(KEY_H_OUVERTURE)));
+                restaurant.setTelephone(c.getString(c.getColumnIndex(KEY_TELEPHONE)));
+                restaurant.setQR_code(c.getInt(c.getColumnIndex(KEY_QR_CODE)));
+                restaurant.setLongitude(c.getString(c.getColumnIndex(KEY_LONGITUDE)));
+                restaurant.setLatitude(c.getString(c.getColumnIndex(KEY_LATITUDE)));
+
+                // add to restaurants list
+                restaurants.add(restaurant);
+            } while (c.moveToNext());
+        }
+        c.close();
+        db.close();
+        return restaurants;
     }
 
     /*
@@ -211,7 +226,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         for (long categorieFood_id : categorieFood_ids){
             createFoodRestaurant(categorieFood_id,restaurant_id);
         }
-
+        db.close();
         return restaurant_id;
     }
 

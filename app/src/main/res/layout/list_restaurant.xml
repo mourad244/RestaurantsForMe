@@ -8,8 +8,9 @@
 
     <ImageView
         android:id="@+id/image"
+        android:scaleType="fitStart"
         android:layout_width="150dp"
-        android:layout_height="60dp"/>
+        android:layout_height="60dp" />
 
     <TextView
         android:id="@+id/nom"
@@ -19,6 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/darker_gray"
+        android:textSize="22sp"
         android:text="Restaurant" />
 
     <TextView android:id="@+id/distance"

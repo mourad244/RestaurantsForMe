@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.util.List;
 
 public class CategorieAdapter extends BaseAdapter {
@@ -19,7 +18,6 @@ public class CategorieAdapter extends BaseAdapter {
         this.categorieFoods = categorieFoods;
         this.mContext = mContext;
     }
-
 
     @Override
     public int getCount() {

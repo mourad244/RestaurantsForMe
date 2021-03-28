@@ -60,9 +60,11 @@ public class SecondActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                GridView gridView2 = (GridView) findViewById(R.id.gvFood);
+                gridView2.
                 Intent intent2 = new Intent(SecondActivity.this,ThirdActivity.class);
+                intent2.putExtra("food_categorie",)
                 startActivity(intent2);
-
             }
         });
     }

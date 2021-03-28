@@ -134,26 +134,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return categorieFood_id;
     }
 
-    /*
-    * get single categorie food
-     */
-    public CategorieFood getCategorieFood(long categorieFood_id){
-        SQLiteDatabase db = this.getReadableDatabase();
 
-        String selectedQuery = "SELECT * FROM " + TABLE_CATEGORIE_FOOD + " WHERE " +
-                KEY_ID  + " = " + categorieFood_id;
+      /*
+    get restaurant having of a categorie food
+     */
+
+    public Restaurant getFoodRestaurants(long categorieFood_id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectedQuery = "SELECT * FROM " + TABLE_FOOD_RESTAURANT + " WHERE " +
+                KEY_RESTAURANT_ID + " = " + categorieFood_id;
         Log.e(LOG, selectedQuery);
         Cursor c = db.rawQuery(selectedQuery,null);
 
         if(c != null)
             c.moveToFirst();
 
-        CategorieFood categorie = new CategorieFood();
-        categorie.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-        categorie.setNom(c.getString(c.getColumnIndex(KEY_NOM)));
-        categorie.setImage(c.getInt(c.getColumnIndex(KEY_IMAGE)));
+        Restaurant restaurant = new Restaurant();
+        restaurant.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+        restaurant.setNom(c.getString(c.getColumnIndex(KEY_NOM)));
+        restaurant.setImage(c.getInt(c.getColumnIndex(KEY_IMAGE)));
+        restaurant.setDescription(c.getString(c.getColumnIndex(KEY_DESCRIPTION)));
+        restaurant.setH_fermeture(c.getString(c.getColumnIndex(KEY_H_FERMETURE)));
+        restaurant.setH_ouverture(c.getString(c.getColumnIndex(KEY_H_OUVERTURE)));
+        restaurant.setTelephone(c.getString(c.getColumnIndex(KEY_TELEPHONE)));
+        restaurant.setQR_code(c.getInt(c.getColumnIndex(KEY_QR_CODE)));
+        restaurant.setLongitude(c.getString(c.getColumnIndex(KEY_LONGITUDE)));
+        restaurant.setLatitude(c.getString(c.getColumnIndex(KEY_LATITUDE)));
 
-        return categorie;
+        return restaurant;
     }
 
     /*
@@ -203,7 +211,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         for (long categorieFood_id : categorieFood_ids){
             createFoodRestaurant(categorieFood_id,restaurant_id);
         }
-
 
         return restaurant_id;
     }
@@ -257,6 +264,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long id = db.insert(TABLE_FOOD_RESTAURANT,null, values);
         return id;
     }
+
+    /*
+     * get single categorie food
+     */
+    public CategorieFood getCategorieFood(long categorieFood_id){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectedQuery = "SELECT * FROM " + TABLE_CATEGORIE_FOOD + " WHERE " +
+                KEY_ID  + " = " + categorieFood_id;
+        Log.e(LOG, selectedQuery);
+        Cursor c = db.rawQuery(selectedQuery,null);
+
+        if(c != null)
+            c.moveToFirst();
+
+        CategorieFood categorie = new CategorieFood();
+        categorie.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+        categorie.setNom(c.getString(c.getColumnIndex(KEY_NOM)));
+        categorie.setImage(c.getInt(c.getColumnIndex(KEY_IMAGE)));
+
+        return categorie;
+    }
+
     /*
     Closing database connection
      */

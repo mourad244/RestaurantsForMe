@@ -1,5 +1,6 @@
 package com.hfad.restaurantsforme;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     public static String PREF_PASSWORD="password";
 
     @BindView(R.id.sName)
+    @Nullable
     EditText Name;
     @BindView(R.id.sPassword)
     EditText Password;

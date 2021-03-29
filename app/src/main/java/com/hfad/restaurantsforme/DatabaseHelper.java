@@ -125,8 +125,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_NOM, categorieFood.getNom());
         values.put(KEY_IMAGE, categorieFood.getImage());
 
-
-
         // insert row
         long categorieFood_id = db.insert(TABLE_CATEGORIE_FOOD,null,values);
 

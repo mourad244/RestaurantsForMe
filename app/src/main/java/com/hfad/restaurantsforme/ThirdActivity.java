@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class ThirdActivity extends Activity {
 
     // database helper
     DatabaseHelper db;
+
 
     @BindView(R.id.listView)
     ListView listView;

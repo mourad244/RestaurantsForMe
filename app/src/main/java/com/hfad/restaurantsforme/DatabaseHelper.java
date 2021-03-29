@@ -68,8 +68,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             KEY_H_FERMETURE + " DATETIME, "+
             KEY_TELEPHONE + " TEXT, "+
             KEY_QR_CODE + " INTEGER, "+
-            KEY_LONGITUDE + " TEXT, "+
-            KEY_LATITUDE + " TEXT"+")";
+            KEY_LONGITUDE + " DOUBLE, "+
+            KEY_LATITUDE + " DOUBLE"+")";
 
     // Food_restaurant table create statement
     private static final String CREATE_TABLE_FOOD_RESTAURANT = "CREATE TABLE " +

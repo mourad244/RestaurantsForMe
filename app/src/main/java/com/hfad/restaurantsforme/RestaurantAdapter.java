@@ -1,7 +1,14 @@
 package com.hfad.restaurantsforme;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Build;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +18,26 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+
+import java.io.IOException;
 import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
-public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
+public class RestaurantAdapter extends ArrayAdapter<Restaurant>  {
     private  Context mContext;
     private int mResource;
+
+    FusedLocationProviderClient fusedLocationProviderClient;
+
 
     public RestaurantAdapter(@NonNull Context context, int resource, @NonNull List<Restaurant> objects) {
         super(context, resource, objects);
@@ -41,12 +60,10 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
         image.setImageResource(getItem(position).getImage());
         nom.setText(getItem(position).getNom());
 
-        // status (calculating hour)
+        // -----------------status (calculating hour)-------------------- ----
         Calendar now = Calendar.getInstance();
         int hour = now.get(Calendar.HOUR_OF_DAY);
         int min = now.get(Calendar.MINUTE);
-
-
 
         String[] splitOuverture = getItem(position).getH_ouverture().split(":");
         int h_ouverture = Integer.parseInt(splitOuverture[0]);
@@ -66,6 +83,51 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
             else status.setText("Fermé");
         } else status.setText("Fermé");
 
+        //-----------------****************---------------------
+
+        // --------------- Distance ----------------------------
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(mContext);
+
+
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED ) {
+
+            fusedLocationProviderClient.getLastLocation()
+                    .addOnCompleteListener(new OnCompleteListener<Location>() {
+
+                        @Override
+                        public void onComplete(@NonNull Task<Location> task) {
+                            // Initialize location
+                            Location location = task.getResult();
+                            if(location != null){
+                                // Initialize address
+                                try {
+
+                                    // Initialize geocoder
+                                    Geocoder geocoder = new Geocoder(mContext, Locale.getDefault());
+
+                                    List<Address> addresses = geocoder.getFromLocation(
+                                            location.getLatitude(),location.getLongitude(),1
+                                    );
+
+                                    int text = (int) addresses.get(0).getLatitude();
+
+                                    distance.setText(Html.fromHtml("<font color='#6200EE'><b>Latitude :</b><br> " +
+                                            "</font>" + addresses.get(0).getLocality()));
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    });
+            } else{
+            // when permission denid
+            ActivityCompat.requestPermissions((Activity) mContext,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},44);
+        }
+
         return convertView;
     }
+
+
 }

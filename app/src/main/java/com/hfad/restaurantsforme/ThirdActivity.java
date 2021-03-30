@@ -4,18 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
-
-import com.google.android.gms.common.api.GoogleApiClient;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ThirdActivity extends Activity {
-    // Array of restaurants objects
 
     // database helper
     DatabaseHelper db;
@@ -58,7 +55,6 @@ public class ThirdActivity extends Activity {
             long[] food_restaurant2 = {1,4,5,6};
             long[] food_restaurant3 = {1,2,3};
 
-
             db.createRestaurant(restaurant1,food_restaurant1);
             db.createRestaurant(restaurant2,food_restaurant2);
             db.createRestaurant(restaurant3,food_restaurant3);
@@ -68,7 +64,6 @@ public class ThirdActivity extends Activity {
             db.close();
         }
 
-
         Intent intent = getIntent();
         int id = intent.getIntExtra("foodCategorie_id",1);
 
@@ -76,7 +71,23 @@ public class ThirdActivity extends Activity {
 
         List <Restaurant> restaurants ;
         restaurants = db.getFoodRestaurants(id);
+        db.close();
         RestaurantAdapter restaurantAdapter = new RestaurantAdapter(this,R.layout.list_restaurant,restaurants);
         listView.setAdapter(restaurantAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent1 = new Intent(ThirdActivity.this,MapsActivity.class);
+
+                db = new DatabaseHelper(getApplicationContext());
+                long foodRestaurantId =  restaurants.get(position).getId();
+                long restaurantId = db.getRestaurantId(foodRestaurantId);
+
+                intent1.putExtra("restaurantId",restaurantId);
+                startActivity(intent1);
+            }
+        });
     }
+
 }

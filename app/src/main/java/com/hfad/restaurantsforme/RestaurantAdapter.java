@@ -14,19 +14,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
-
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-
 import java.io.IOException;
-import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -88,7 +83,6 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant>  {
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(mContext);
 
-
         if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED ) {
 
@@ -108,7 +102,9 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant>  {
                                     Geocoder geocoder = new Geocoder(mContext, Locale.getDefault());
 
                                     List<Address> addresses = geocoder.getFromLocation(
-                                            location.getLatitude(),location.getLongitude(),1
+                                            location.getLatitude(),
+                                            location.getLongitude(),
+                                            1
                                     );
 
                                     float[] results = new float[1];
@@ -119,7 +115,7 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant>  {
                                             ,results);
 
                                     if (results[0]>1000){
-                                        distance.setText(String.format("%2f",results[0]/1000)  +" Km");
+                                        distance.setText(String.format("%.2f",results[0]/1000)  +" Km");
                                     }
                                     else
                                     distance.setText((int)results[0]+" m");
@@ -131,11 +127,9 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant>  {
                     });
             } else{
             // when permission denid
-            ActivityCompat.requestPermissions((Activity) mContext,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},44);
+            ActivityCompat.requestPermissions((Activity) mContext,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},44);
         }
-
         return convertView;
     }
-
-
 }

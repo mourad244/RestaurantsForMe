@@ -301,6 +301,51 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*
+    get a restaurant
+     */
+    public Restaurant getRestaurant(long restaurant_id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectedQuery = "SELECT * FROM " + TABLE_RESTAURANT + " WHERE " +
+                KEY_ID  + " = " + restaurant_id;
+        Log.e(LOG, selectedQuery);
+
+        Cursor c = db.rawQuery(selectedQuery,null);
+
+        if(c != null)
+            c.moveToFirst();
+        Restaurant restaurant = new Restaurant();
+        restaurant.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+        restaurant.setNom(c.getString(c.getColumnIndex(KEY_NOM)));
+        restaurant.setImage(c.getInt(c.getColumnIndex(KEY_IMAGE)));
+        restaurant.setDescription(c.getString(c.getColumnIndex(KEY_DESCRIPTION)));
+        restaurant.setH_ouverture(c.getString(c.getColumnIndex(KEY_H_OUVERTURE)));
+        restaurant.setH_fermeture(c.getString(c.getColumnIndex(KEY_H_FERMETURE)));
+        restaurant.setTelephone(c.getString(c.getColumnIndex(KEY_TELEPHONE)));
+        restaurant.setQR_code(c.getInt(c.getColumnIndex(KEY_QR_CODE)));
+        restaurant.setLongitude(c.getDouble(c.getColumnIndex(KEY_LONGITUDE)));
+        restaurant.setLatitude(c.getDouble(c.getColumnIndex(KEY_LATITUDE)));
+        return restaurant;
+    }
+    /*
+    get restaurantId from foodRestaurant
+     */
+    public long getRestaurantId(long foodRestaurantId){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectedQuery = "SELECT " + KEY_RESTAURANT_ID + " FROM " + TABLE_FOOD_RESTAURANT +
+                " WHERE " + KEY_ID  + " = " + foodRestaurantId;
+        Log.e(LOG, selectedQuery);
+
+        Cursor c = db.rawQuery(selectedQuery,null);
+        if(c != null)
+            c.moveToFirst();
+
+        int restaurantId =c.getInt(c.getColumnIndex(KEY_RESTAURANT_ID));
+        c.close();
+        db.close();
+        return restaurantId;
+    }
+
+    /*
     Closing database connection
      */
     public void closeDB(){

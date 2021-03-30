@@ -1,38 +1,32 @@
 package com.hfad.restaurantsforme;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
+
 import androidx.fragment.app.FragmentActivity;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    LatLng latLng;
+
+    Button btnItineraire;
+
+    // database helper
+    DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +44,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-    }
+        Intent intent = getIntent();
+        long restaurantId = intent.getLongExtra("restaurantId",-1);
 
+        db = new DatabaseHelper(getApplicationContext());
+
+        Restaurant restaurant  = db.getRestaurant(restaurantId);
+
+        // Add a marker in Sydney and move the camera
+        LatLng position = new LatLng(restaurant.getLatitude(), restaurant.getLongitude());
+        mMap.addMarker(new MarkerOptions().position(position).title(restaurant.getNom()));
+        float zoomLevel = 16.0f;
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position,zoomLevel));
+
+
+        // afficher itineraire
+        btnItineraire = findViewById(R.id.itineraire);
+
+        btnItineraire.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
 
 }

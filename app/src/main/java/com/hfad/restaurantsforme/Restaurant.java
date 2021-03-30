@@ -9,15 +9,15 @@ public class Restaurant {
     private String h_fermeture;
     private String telephone;
     private int QR_code;
-    private String longitude;
-    private String latitude;
+    private Double longitude;
+    private Double latitude;
 
 
     public Restaurant (){};
 
     public Restaurant (String nom, int image, String description, String h_ouverture,
-                       String h_fermeture, String telephone, int QR_code, String longitude,
-                       String latitude){
+                       String h_fermeture, String telephone, int QR_code, Double longitude,
+                       Double latitude){
         this.nom = nom;
         this.image = image;
         this.description = description;
@@ -30,8 +30,8 @@ public class Restaurant {
     }
 
     public Restaurant (int id, String nom, int image, String description, String h_ouverture,
-                       String h_fermeture, String telephone, int QR_code, String longitude,
-                       String latitude){
+                       String h_fermeture, String telephone, int QR_code, Double longitude,
+                       Double latitude){
         this.id = id;
         this.nom = nom;
         this.image = image;
@@ -76,11 +76,11 @@ public class Restaurant {
 
     public void setQR_code(int QR_code) { this.QR_code = QR_code; }
 
-    public String getLongitude() { return longitude; }
+    public Double getLongitude() { return longitude; }
 
-    public void setLongitude(String longitude) { this.longitude = longitude; }
+    public void setLongitude(Double longitude) { this.longitude = longitude; }
 
-    public String getLatitude() { return latitude; }
+    public Double getLatitude() { return latitude; }
 
-    public void setLatitude(String latitude) { this.latitude = latitude; }
+    public void setLatitude(Double latitude) { this.latitude = latitude; }
 }

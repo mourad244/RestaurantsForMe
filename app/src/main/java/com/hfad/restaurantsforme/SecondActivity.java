@@ -61,8 +61,6 @@ public class SecondActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                GridView gridView2 = (GridView) findViewById(R.id.gvFood);
-
 
                 Intent intent2 = new Intent(SecondActivity.this,ThirdActivity.class);
                 int categorieFood_id = categorieFoodList.get(position).getId();

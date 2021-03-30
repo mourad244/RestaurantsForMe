@@ -1,14 +1,13 @@
 package com.hfad.restaurantsforme;
 
 import android.Manifest;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.os.Build;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,6 +95,7 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant>  {
             fusedLocationProviderClient.getLastLocation()
                     .addOnCompleteListener(new OnCompleteListener<Location>() {
 
+
                         @Override
                         public void onComplete(@NonNull Task<Location> task) {
                             // Initialize location
@@ -111,10 +111,14 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant>  {
                                             location.getLatitude(),location.getLongitude(),1
                                     );
 
-                                    int text = (int) addresses.get(0).getLatitude();
+                                    float[] results = new float[1];
+                                    Location.distanceBetween(addresses.get(0).getLatitude(),
+                                            addresses.get(0).getLongitude(),
+                                            getItem(position).getLatitude(),
+                                            getItem(position).getLongitude()
+                                            ,results);
 
-                                    distance.setText(Html.fromHtml("<font color='#6200EE'><b>Latitude :</b><br> " +
-                                            "</font>" + addresses.get(0).getLocality()));
+                                    distance.setText((int)results[0]+" m");
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }

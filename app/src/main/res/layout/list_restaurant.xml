@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/image"
         android:scaleType="fitStart"
-        android:layout_width="150dp"
+        android:layout_width="120dp"
         android:layout_height="60dp" />
 
     <TextView
@@ -22,14 +22,14 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/darker_gray"
         android:textSize="22sp"
-        android:text="Restaurant" />
+         />
 
     <TextView android:id="@+id/distance"
         android:layout_alignParentEnd="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/darker_gray"
-        android:text="500m"/>
+        />
 
     <TextView android:id="@+id/status"
         android:layout_width="wrap_content"
@@ -37,6 +37,6 @@
         android:layout_marginTop="20dp"
         android:layout_alignParentEnd="true"
         android:layout_below="@id/distance"
-        android:text="Ouvert"/>
+        />
 
 </RelativeLayout>

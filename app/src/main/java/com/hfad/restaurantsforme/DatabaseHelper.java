@@ -165,8 +165,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 restaurant.setH_ouverture(c.getString(c.getColumnIndex(KEY_H_OUVERTURE)));
                 restaurant.setTelephone(c.getString(c.getColumnIndex(KEY_TELEPHONE)));
                 restaurant.setQR_code(c.getInt(c.getColumnIndex(KEY_QR_CODE)));
-                restaurant.setLongitude(c.getString(c.getColumnIndex(KEY_LONGITUDE)));
-                restaurant.setLatitude(c.getString(c.getColumnIndex(KEY_LATITUDE)));
+                restaurant.setLongitude(c.getDouble(c.getColumnIndex(KEY_LONGITUDE)));
+                restaurant.setLatitude(c.getDouble(c.getColumnIndex(KEY_LATITUDE)));
 
                 // add to restaurants list
                 restaurants.add(restaurant);
@@ -253,8 +253,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 r.setH_fermeture(c.getString(c.getColumnIndex(KEY_H_FERMETURE)));
                 r.setTelephone(c.getString(c.getColumnIndex(KEY_TELEPHONE)));
                 r.setQR_code(c.getInt(c.getColumnIndex(KEY_QR_CODE)));
-                r.setLongitude(c.getString(c.getColumnIndex(KEY_LONGITUDE)));
-                r.setLatitude(c.getString(c.getColumnIndex(KEY_LATITUDE)));
+                r.setLongitude(c.getDouble(c.getColumnIndex(KEY_LONGITUDE)));
+                r.setLatitude(c.getDouble(c.getColumnIndex(KEY_LATITUDE)));
 
                 // adding to restaurants list
                 restaurants.add(r);

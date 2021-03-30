@@ -118,6 +118,10 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant>  {
                                             getItem(position).getLongitude()
                                             ,results);
 
+                                    if (results[0]>1000){
+                                        distance.setText(String.format("%2f",results[0]/1000)  +" Km");
+                                    }
+                                    else
                                     distance.setText((int)results[0]+" m");
                                 } catch (IOException e) {
                                     e.printStackTrace();

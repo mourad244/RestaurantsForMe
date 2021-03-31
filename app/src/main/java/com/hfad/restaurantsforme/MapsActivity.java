@@ -50,7 +50,6 @@ import java.util.Locale;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private Context mContext;
     private GoogleMap mMap;
     private LatLng mOrigin;
     private LatLng mDestination;
@@ -143,10 +142,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                         // getting the direction
                                         mMap = googleMap;
                                         mMap.getUiSettings().setZoomControlsEnabled(true);
-                                        if (ActivityCompat.checkSelfPermission(mContext,
+                                        if (ActivityCompat
+                                                .checkSelfPermission(MapsActivity.this,
                                                 Manifest.permission.ACCESS_FINE_LOCATION)
                                                 != PackageManager.PERMISSION_GRANTED
-                                                && ActivityCompat.checkSelfPermission(mContext,
+                                                && ActivityCompat
+                                                .checkSelfPermission(MapsActivity.this,
                                                 Manifest.permission.ACCESS_COARSE_LOCATION)
                                                 != PackageManager.PERMISSION_GRANTED) {
                                             // TODO: Consider calling
@@ -167,7 +168,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                         mMap.addMarker(new MarkerOptions().position(mDestination)
                                                 .title("Destination"));
                                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mOrigin,
-                                                8f));
+                                                14f));
                                         new TaskDirectionRequest().execute(buildRequestUrl(
                                                 mOrigin, mDestination));
 

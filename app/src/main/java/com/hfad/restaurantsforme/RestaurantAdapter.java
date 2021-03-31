@@ -83,7 +83,8 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant>  {
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(mContext);
 
-        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION)
+        if (ActivityCompat.checkSelfPermission(mContext,
+                Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED ) {
 
             fusedLocationProviderClient.getLastLocation()

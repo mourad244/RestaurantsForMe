@@ -21,11 +21,12 @@ public class MainActivity extends AppCompatActivity {
     public static String PREF_USERNAME="username";
     public static String PREF_PASSWORD="password";
 
-    @BindView(R.id.sName)
     @Nullable
+    @BindView(R.id.sName)
     EditText Name;
     @BindView(R.id.sPassword)
     EditText Password;
+    @Nullable
     @BindView(R.id.msgError)
     TextView messageError;
     /*@BindView(R.id.btnLogin) Button connecter;*/

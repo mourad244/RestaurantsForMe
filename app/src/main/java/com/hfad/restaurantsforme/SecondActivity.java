@@ -46,6 +46,29 @@ public class SecondActivity extends AppCompatActivity {
             db.createCategorieFood(italien);
         }
 
+        // check if table tagfood is empty to add tag of foods
+        if(db.getAllTagFoods().isEmpty()){
+            TagFood sandwich = new TagFood("sandwich",2);
+            TagFood hamberger = new TagFood("hamberger",2);
+            TagFood panini = new TagFood("panini",2);
+            TagFood pizza = new TagFood("pizza",1);
+            TagFood tacos = new TagFood("tacos",3);
+            TagFood seffa = new TagFood("seffa",4);
+            TagFood rfissa = new TagFood("rfissa",4);
+            TagFood couscous = new TagFood("couscous",4);
+            TagFood harira = new TagFood("harira",4);
+            TagFood tajine = new TagFood("tajine",4);
+            TagFood sushi = new TagFood("sushi",5);
+            TagFood aromaki = new TagFood("aromaki",5);
+            TagFood saumon = new TagFood("saumon",5);
+            TagFood sishmi = new TagFood("sishimi",5);
+            TagFood pasta = new TagFood("pasta",6);
+
+            // Inserting tag food in db
+            db.createTagFood(sandwich,hamberger,panini,pizza,tacos,rfissa,seffa,couscous,harira,
+            tajine,saumon,aromaki,sishmi,sushi,pasta);
+        }
+
 
 //        Log.d("Categorie count","Categorie Count: " + db.getAllCategorieFoods().size());
 

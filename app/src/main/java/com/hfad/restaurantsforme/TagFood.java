@@ -3,9 +3,6 @@ package com.hfad.restaurantsforme;
 public class TagFood {
     private int id;
     private String nom;
-
-
-
     private int categorieFoodId;
 
     public TagFood(){}
@@ -25,12 +22,14 @@ public class TagFood {
     public void setId(int id) {
         this.id = id;
     }
+
     public String getNom() {
         return nom;
     }
     public void setNom(String nom) {
         this.nom = nom;
     }
+
     public int getCategorieFoodId() {
         return categorieFoodId;
     }

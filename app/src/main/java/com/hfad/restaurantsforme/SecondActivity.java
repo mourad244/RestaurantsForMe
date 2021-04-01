@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+
+import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
 
@@ -64,9 +66,26 @@ public class SecondActivity extends AppCompatActivity {
             TagFood sishmi = new TagFood("sishimi",5);
             TagFood pasta = new TagFood("pasta",6);
 
+            List tags = new ArrayList();
+            tags.add(sandwich);
+            tags.add(hamberger);
+            tags.add(panini);
+            tags.add(pizza);
+            tags.add(tacos);
+            tags.add(seffa);
+            tags.add(rfissa);
+            tags.add(couscous);
+            tags.add(harira);
+            tags.add(tajine);
+            tags.add(sushi);
+            tags.add(aromaki);
+            tags.add(saumon);
+            tags.add(sishmi);
+            tags.add(pasta);
+
+
             // Inserting tag food in db
-            db.createTagFood(sandwich,hamberger,panini,pizza,tacos,rfissa,seffa,couscous,harira,
-            tajine,saumon,aromaki,sishmi,sushi,pasta);
+            db.createTagFood(tags);
         }
 
 

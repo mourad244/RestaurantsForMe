@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +28,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -55,7 +57,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LatLng mDestination;
 
     FusedLocationProviderClient fusedLocationProviderClient;
+    // Itineraire button
     Button btnItineraire;
+
+    // Call button
+    Button btnAppeler;
 
     // database helper
     DatabaseHelper db;
@@ -86,18 +92,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Add a marker in Sydney and move the camera
         LatLng position = new LatLng(restaurant.getLatitude(), restaurant.getLongitude());
-        mMap.addMarker(new MarkerOptions().position(position).title(restaurant.getNom()));
-        float zoomLevel = 16.0f;
+        mMap.addMarker(new MarkerOptions().position(position).title(restaurant.getNom())
+                .icon(BitmapDescriptorFactory
+                .defaultMarker(BitmapDescriptorFactory
+                        .HUE_GREEN)))
+                .showInfoWindow();
+        float zoomLevel = 14.0f;
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, zoomLevel));
 
 
+        // appeler restaurant
+        btnAppeler = findViewById(R.id.appeler);
+        btnAppeler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri nTelephone = Uri.parse("tel: " + restaurant.getTelephone());
+                Intent intent = new Intent(Intent.ACTION_DIAL,nTelephone);
+
+                startActivity(intent);
+
+            }
+        });
         // afficher itineraire
         btnItineraire = findViewById(R.id.itineraire);
 
         btnItineraire.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("hello","hello");
                 fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(
                         MapsActivity.this);
 
@@ -135,12 +156,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                                 location.getLongitude(),
                                                 1
                                         );
+
+
                                         mOrigin = new LatLng(addresses.get(0).getLatitude(),
                                                 addresses.get(0).getLongitude());
                                         mDestination = position;
 
                                         // getting the direction
-                                        mMap = googleMap;
+
                                         mMap.getUiSettings().setZoomControlsEnabled(true);
                                         if (ActivityCompat
                                                 .checkSelfPermission(MapsActivity.this,
@@ -163,12 +186,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                         mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
                                         // Show marker on the screen and adjust the zoom level
-                                        mMap.addMarker(new MarkerOptions().position(mOrigin)
-                                                .title("Origin"));
-                                        mMap.addMarker(new MarkerOptions().position(mDestination)
-                                                .title("Destination"));
+                                        //mMap.addMarker(new MarkerOptions().position(mOrigin)
+                                        //        .title("Origin"));
+
+                                        // code to have the zoom adapted to the distance between two points
+                                      /*  float[] results = new float[1];
+                                        Location.distanceBetween(mDestination.latitude,
+                                                mDestination.longitude,
+                                                mOrigin.latitude,
+                                                mOrigin.longitude
+                                                ,results);
+                                        float zoom = results[0] * 3/115f;*/
                                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mOrigin,
-                                                14f));
+                                              14f));
+                                        // 580m ---> 15f
+                                        // distance ---> zoom
+
+
                                         new TaskDirectionRequest().execute(buildRequestUrl(
                                                 mOrigin, mDestination));
 
@@ -211,6 +245,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             String responseString = "";
             try {
                 responseString = requestDirection(strings[0]);
+                Log.d("hello",responseString);
             } catch (Exception e) {
                 e.printStackTrace();
             }

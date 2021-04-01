@@ -65,7 +65,7 @@ public class ThirdActivity extends Activity {
         }
 
         Intent intent = getIntent();
-        int id = intent.getIntExtra("foodCategorie_id",1);
+        int id = intent.getIntExtra("foodCategorie_id",-1);
 
         db = new DatabaseHelper(getApplicationContext());
 

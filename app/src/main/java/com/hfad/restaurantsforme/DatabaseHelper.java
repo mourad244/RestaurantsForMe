@@ -24,6 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //Table Names
     private static final String TABLE_CATEGORIE_FOOD = "categorie_food";
+    private static final String TABLE_TAG_FOOD = "tags_food";
     private static final String TABLE_RESTAURANT = "restaurant";
     private static final String TABLE_FOOD_RESTAURANT = "food_restaurant";
     private static final String TABLE_MENU = "menu";
@@ -32,6 +33,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_ID = "id";
     private static final String KEY_NOM = "nom";
     private static final String KEY_IMAGE = "image";
+    private static final String KEY_CATEGORIE_FOOD_ID = "categorieFood_id";
+
 
     // restaurant Table - column names
     private static final String KEY_DESCRIPTION = "description";
@@ -43,7 +46,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_LATITUDE = "latitude";
 
     // foodRestaurant Table - column names
-    private static final String KEY_CATEGORIE_FOOD_ID = "categorieFood_id";
     private static final String KEY_RESTAURANT_ID = "restaurant_id";
 
     // menu Table - column names
@@ -56,6 +58,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "+
             KEY_NOM + " TEXT, " +
             KEY_IMAGE + " INTEGER"+")";
+
+    // Tag_food table  create statement
+    private static final String CREATE_TABLE_TAG_FOOD = "CREATE TABLE "+
+            TABLE_TAG_FOOD + "(" +
+            KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+            KEY_NOM + " TEXT, " +
+            KEY_CATEGORIE_FOOD_ID + " INTEGER"+")";
 
     // Restaurant table create statement
     private static final String CREATE_TABLE_RESTAURANT = "CREATE TABLE " +
@@ -98,6 +107,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     db.execSQL(CREATE_TABLE_RESTAURANT);
     db.execSQL(CREATE_TABLE_FOOD_RESTAURANT);
     db.execSQL(CREATE_TABLE_MENU);
+    db.execSQL(CREATE_TABLE_TAG_FOOD);
     }
 
     @Override
@@ -108,10 +118,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " +TABLE_RESTAURANT);
         db.execSQL("DROP TABLE IF EXISTS " +TABLE_FOOD_RESTAURANT);
         db.execSQL("DROP TABLE IF EXISTS " +TABLE_MENU);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TAG_FOOD);
 
 
         //Create new tables
         onCreate(db);
+    }
+
+
+    /*
+    * Create a tag_food
+     */
+    public long createTagFood(TagFood tagFood){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_NOM, tagFood.getNom());
+        values.put(KEY_CATEGORIE_FOOD_ID, tagFood.getCategorieFoodId());
     }
 
     /*

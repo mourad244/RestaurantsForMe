@@ -2,21 +2,18 @@ package com.hfad.restaurantsforme;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity {
+public class AuthenActivity extends AppCompatActivity {
+
     public static String  PREFS_NAME="mypre";
     public static String PREF_USERNAME="username";
     public static String PREF_PASSWORD="password";
@@ -35,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_authentification);
         ButterKnife.bind(this);
         loadData();
 
@@ -58,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 rememberMe(username,password); //save username and password
             //show logout activity
 
-            Intent  intent =new Intent(MainActivity.this, SecondActivity.class);
+            Intent  intent =new Intent(AuthenActivity.this, AdminActivity.class);
             startActivity(intent);
         }
 
@@ -86,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     public void loadData(){
         Name.setText(getSharedPreferences(PREFS_NAME,MODE_PRIVATE).getString(PREF_USERNAME,""));
         Password.setText(getSharedPreferences(PREFS_NAME,MODE_PRIVATE).getString(PREF_PASSWORD,""));
-        if(Name!=null && Password!=null)
-            validate(Name.getText().toString(),Password.getText().toString());
+//        if(Name!=null && Password!=null)
+//            validate(Name.getText().toString(),Password.getText().toString());
     }
 }

@@ -7,13 +7,13 @@
     tools:context=".SecondActivity"
     >
     <Button
-        android:id="@+id/btlogout"
+        android:id="@+id/btnLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
-        android:onClick="logout"
-        android:text="Log out" />
+        android:onClick="login"
+        android:text="Login" />
     <TextView
         android:id="@+id/titre"
         android:layout_width="wrap_content"
@@ -24,7 +24,7 @@
         android:text="categorie des restaurants"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="40dp"
-        android:layout_below="@id/btlogout"/>
+        android:layout_below="@id/btnLogin"/>
 
     <GridView
         android:id="@+id/gvFood"

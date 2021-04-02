@@ -2,14 +2,12 @@ package com.hfad.restaurantsforme;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import java.util.ArrayList;
 import java.util.List;
-import butterknife.BindView;
 
 public class SecondActivity extends AppCompatActivity {
     public static String  PREFS_NAME="mypre";
@@ -105,16 +103,23 @@ public class SecondActivity extends AppCompatActivity {
         });
     }
 
-    public void logout(View view){
+    public void login(View view){
+
+
+        //show login form
+        Intent intent=new Intent(this, AuthenActivity.class);
+        startActivity(intent);
+    }
+   /* public void logout(View view){
         SharedPreferences sharedPrefs =getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.clear();
         editor.apply();
 
         //show login form
-        Intent intent=new Intent(this, MainActivity.class);
+        Intent intent=new Intent(this, Authentification.class);
         startActivity(intent);
-    }
+    }*/
 
 
 }

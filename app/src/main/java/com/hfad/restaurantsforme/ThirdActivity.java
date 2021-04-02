@@ -51,14 +51,42 @@ public class ThirdActivity extends Activity {
                     "0516671435",R.drawable.qr_code_ex,
                     -6.595930,34.262264);
 
-            long[] food_restaurant1 = {1,2,3,4,5,6};
-            long[] food_restaurant2 = {1,4,5,6};
-            long[] food_restaurant3 = {1,2,3};
+            long restaurant1Id = db.createRestaurant(restaurant1);
+            long restaurant2Id = db.createRestaurant(restaurant2);
+            long restaurant3Id = db.createRestaurant(restaurant3);
+            long restaurant4Id = db.createRestaurant(restaurant4);
 
-            db.createRestaurant(restaurant1,food_restaurant1);
-            db.createRestaurant(restaurant2,food_restaurant2);
-            db.createRestaurant(restaurant3,food_restaurant3);
-            db.createRestaurant(restaurant4,food_restaurant1);
+            // add menu to each restaurant
+            Food tacosPoulet  = new Food("Tacos poulet","tacos poulet",
+                    30,restaurant1Id);
+            Food tacosMixte = new Food("Tacos mixte","tacos poulet",
+                    45,restaurant1Id);
+            Food sandwichPoulet = new Food("Sandwich poulet","sandwich poulet",
+                    25,restaurant2Id);
+            Food paniniPoulet = new Food("Panini poulet", "panini poulet ",
+                    30,restaurant2Id);
+            Food pizzaMargaritta = new Food("Pizza margarita", "margaritta",
+                    40,restaurant3Id);
+            Food seffa = new Food("Seffa", "seffa", 30,restaurant3Id);
+            Food sushi = new Food("Sushi","sushi", 50,restaurant4Id);
+
+            // affecte categorie of foods to a restaurant
+            //   long[] food_restaurant1 = {1,2,3,4,5,6};
+            //   long[] food_restaurant2 = {1,4,5,6};
+            //   long[] food_restaurant3 = {1,2,3};
+
+            //  db.createRestaurant(restaurant1,food_restaurant1);
+            //   db.createRestaurant(restaurant2,food_restaurant2);
+            //  db.createRestaurant(restaurant3,food_restaurant3);
+            //   db.createRestaurant(restaurant4,food_restaurant1);
+
+            db.createFood(tacosPoulet);
+            db.createFood(tacosMixte);
+            db.createFood(sandwichPoulet);
+            db.createFood(paniniPoulet);
+            db.createFood(pizzaMargaritta);
+            db.createFood(seffa);
+            db.createFood(sushi);
 
             Log.d("restaurant count","Restaurants Count: " + db.getAllRestaurants().size());
             db.close();

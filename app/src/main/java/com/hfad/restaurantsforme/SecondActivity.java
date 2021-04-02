@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
@@ -19,7 +18,6 @@ public class SecondActivity extends AppCompatActivity {
     DatabaseHelper db;
 
     List<CategorieFood> categorieFoodList;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,11 +81,9 @@ public class SecondActivity extends AppCompatActivity {
             tags.add(sishmi);
             tags.add(pasta);
 
-
             // Inserting tag food in db
             db.createTagFood(tags);
         }
-
 
 //        Log.d("Categorie count","Categorie Count: " + db.getAllCategorieFoods().size());
 

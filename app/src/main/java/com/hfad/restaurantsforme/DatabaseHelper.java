@@ -27,7 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_TAG_FOOD = "tags_food";
     private static final String TABLE_RESTAURANT = "restaurant";
     private static final String TABLE_FOOD_RESTAURANT = "food_restaurant";
-    private static final String TABLE_MENU = "menu";
+    private static final String TABLE_FOOD = "food";
 
     // Common column names
     private static final String KEY_ID = "id";
@@ -64,8 +64,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             TABLE_TAG_FOOD + "(" +
             KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
             KEY_NOM + " TEXT, " +
-            KEY_CATEGORIE_FOOD_ID + " INTEGER REFERENCES " + TABLE_CATEGORIE_FOOD +"("+ KEY_ID+")"+ ")";
-
+            KEY_CATEGORIE_FOOD_ID + " INTEGER "+ ")";
+//REFERENCES " + TABLE_CATEGORIE_FOOD +"("+ KEY_ID+")
     // Restaurant table create statement
     private static final String CREATE_TABLE_RESTAURANT = "CREATE TABLE " +
             TABLE_RESTAURANT + "(" +
@@ -88,8 +88,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             KEY_RESTAURANT_ID + " INTEGER"+")";
 
     // Menu table create statement
-    private static final String CREATE_TABLE_MENU = "CREATE TABLE " +
-            TABLE_MENU + "(" +
+    private static final String CREATE_TABLE_FOOD = "CREATE TABLE " +
+            TABLE_FOOD + "(" +
             KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "+
             KEY_NOM + " TEXT, " +
             KEY_IMAGE + " INTEGER, "+
@@ -106,7 +106,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     db.execSQL(CREATE_TABLE_CATEGORIE_FOOD);
     db.execSQL(CREATE_TABLE_RESTAURANT);
     db.execSQL(CREATE_TABLE_FOOD_RESTAURANT);
-    db.execSQL(CREATE_TABLE_MENU);
+    db.execSQL(CREATE_TABLE_FOOD);
     db.execSQL(CREATE_TABLE_TAG_FOOD);
     }
 
@@ -117,22 +117,124 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " +TABLE_CATEGORIE_FOOD);
         db.execSQL("DROP TABLE IF EXISTS " +TABLE_RESTAURANT);
         db.execSQL("DROP TABLE IF EXISTS " +TABLE_FOOD_RESTAURANT);
-        db.execSQL("DROP TABLE IF EXISTS " +TABLE_MENU);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_FOOD);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TAG_FOOD);
 
 
         //Create new tables
         onCreate(db);
     }
+    /*
+    Create food
+     */
+    public long createFood(Food food){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values= new ContentValues();
+        values.put(KEY_NOM, food.getNom());
+        values.put(KEY_IMAGE, food.getImage());
+        values.put(KEY_DESCRIPTION,food.getDescription());
+        values.put(KEY_PRIX,food.getPrix());
+        values.put(KEY_RESTAURANT_ID,food.getRestaurantId());
+
+        // insert row
+        long food_id = db.insert(TABLE_FOOD,null, values);
+        // Assigning restaurants to categorie of foods
+        sortRestaurantByCategorieeFood(food.getRestaurantId());
+        db.close();
+        return food_id;
+    }
+    /*
+    get the menu of a restaurant;
+     */
+    public List<Food> getFoodsByRestaurant(long restaurantId){
+        List<Food> foods = new ArrayList<>();
+        String selectedQuery = "SELECT * FROM " + TABLE_FOOD + " WHERE "+ KEY_RESTAURANT_ID +
+                " = "+restaurantId;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectedQuery,null);
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()){
+            do{
+                Food food = new Food();
+                food.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+                food.setNom(c.getString(c.getColumnIndex(KEY_NOM)));
+                food.setImage(c.getInt(c.getColumnIndex(KEY_IMAGE)));
+                food.setDescription(c.getString(c.getColumnIndex(KEY_DESCRIPTION)));
+                food.setPrix(c.getInt(c.getColumnIndex(KEY_PRIX)));
+                food.setRestaurantId(c.getInt(c.getColumnIndex(KEY_RESTAURANT_ID)));
+                // adding to categorie food list
+                foods.add(food);
+            } while (c.moveToNext());
+        }
+        return foods;
+    }
+
+    // when creating a menu for a restaurant, it automatically adds it into a categorie of food
+    // depending of its contents: by searching in menu if a food exists in a list of predefined tagfood,
+    // and add it to the categorieFood if not already exists
+
+    public void sortRestaurantByCategorieeFood(long restaurantId){
+        List <TagFood> tagFoodList = getAllTagFoods();
+        List <Food> foods;
 
 
+        foods = getFoodsByRestaurant(restaurantId);
 
+        for (int i =0; i<tagFoodList.size();i++){
+            int j = 0;
+            boolean found = false;
+
+            while (!found && j<foods.size())  {
+                // check if food is in the tag food
+                if ((foods.get(j).getNom()).toLowerCase().contains(tagFoodList.get(i).getNom())){
+                    // add the restaurant to the food_restaurant if not already exists
+                    // 1. check if already exist
+                    found = restaurantIsIncluded(
+                            tagFoodList.get(i).getCategorieFoodId(),
+                            restaurantId);
+                    // if does not exist, add restaurant to categorie food
+                    if (!found)
+                        createFoodRestaurant( tagFoodList.get(i).getCategorieFoodId(),restaurantId);
+                }
+                j++;
+            }
+        }
+
+    }
+
+    /*
+    check if a restaurant is in restaurant_food
+     */
+    public boolean restaurantIsIncluded(long categorieFoodId, long restaurantId){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectedQuery ="SELECT "+ KEY_ID + " FROM " + TABLE_FOOD_RESTAURANT + " WHERE " +
+                KEY_CATEGORIE_FOOD_ID + " = " + categorieFoodId + " AND " + KEY_RESTAURANT_ID +
+                " = " + restaurantId;
+        Cursor c = db.rawQuery(selectedQuery,null);
+
+        if(c.moveToFirst()){
+            do{
+                CategorieFood categorieFood = new CategorieFood();
+                categorieFood.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+                if (categorieFood.getId() >=1){
+                    return true;
+                }
+                // add to restaurants list
+
+            } while (c.moveToNext());
+        }
+        c.close();
+        return false;
+    }
     /*
     * Create a tag_food
      */
     public List createTagFood(List<TagFood> tagFood){
         SQLiteDatabase db = this.getWritableDatabase();
-        List tagFoodIds = null;
+        List tagFoodIds = new ArrayList();
         for(int i=0;i<tagFood.size();i++){
             ContentValues values = new ContentValues();
             values.put(KEY_NOM, tagFood.get(i).getNom());
@@ -212,8 +314,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Cursor c = db.rawQuery(selectedQuery,null);
 
-
-
         if(c.moveToFirst()){
             do{
                 Restaurant restaurant = new Restaurant();
@@ -233,7 +333,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             } while (c.moveToNext());
         }
         c.close();
-        db.close();
         return restaurants;
     }
 
@@ -265,9 +364,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return categorieFoods;
     }
 
-    // when creating a menu for a restaurant, it automatically adds it into a categorie of food
-    // depending of its contents: by searching in menu if a food exists in a list of predefined tagfood,
-    // and add it to the categorieFood if not already exists
+
 
     public long createRestaurant(Restaurant restaurant, long[] categorieFood_ids){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -288,6 +385,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         for (long categorieFood_id : categorieFood_ids){
             createFoodRestaurant(categorieFood_id,restaurant_id);
         }
+        db.close();
+        return restaurant_id;
+    }
+    // create restaurant without defining its categorie
+    public long createRestaurant(Restaurant restaurant){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values= new ContentValues();
+
+        values.put(KEY_NOM, restaurant.getNom());
+        values.put(KEY_IMAGE, restaurant.getImage());
+        values.put(KEY_DESCRIPTION,restaurant.getDescription());
+        values.put(KEY_H_OUVERTURE,restaurant.getH_ouverture());
+        values.put(KEY_H_FERMETURE,restaurant.getH_fermeture());
+        values.put(KEY_TELEPHONE,restaurant.getTelephone());
+        values.put(KEY_QR_CODE, restaurant.getQR_code());
+        values.put(KEY_LONGITUDE, restaurant.getLongitude());
+        values.put(KEY_LATITUDE, restaurant.getLatitude());
+        // insert row
+        long restaurant_id = db.insert(TABLE_RESTAURANT,null, values);
         db.close();
         return restaurant_id;
     }
@@ -388,6 +505,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         restaurant.setQR_code(c.getInt(c.getColumnIndex(KEY_QR_CODE)));
         restaurant.setLongitude(c.getDouble(c.getColumnIndex(KEY_LONGITUDE)));
         restaurant.setLatitude(c.getDouble(c.getColumnIndex(KEY_LATITUDE)));
+        db.close();
         return restaurant;
     }
     /*
@@ -405,7 +523,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         int restaurantId =c.getInt(c.getColumnIndex(KEY_RESTAURANT_ID));
         c.close();
-        db.close();
         return restaurantId;
     }
 

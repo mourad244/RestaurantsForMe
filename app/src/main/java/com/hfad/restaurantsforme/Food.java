@@ -6,9 +6,23 @@ public class Food {
     private int image;
     private String description;
     private int prix;
-    private int restaurantId;
+    private long restaurantId;
 
-    public Food(int id, String nom, int image, String description, int prix, int restaurantId){
+    public Food(){};
+    public Food(String nom, int image, String description, int prix, long restaurantId){
+        this.nom = nom;
+        this.image = image;
+        this.description = description;
+        this.prix = prix;
+        this.restaurantId = restaurantId;
+    }
+    public Food(String nom, String description, int prix, long restaurantId){
+        this.nom = nom;
+        this.description = description;
+        this.prix = prix;
+        this.restaurantId = restaurantId;
+    }
+    public Food(int id, String nom, int image, String description, int prix, long restaurantId){
         this.id = id;
         this.nom = nom;
         this.image = image;
@@ -37,7 +51,7 @@ public class Food {
 
     public void setPrix(int prix) { this.prix = prix; }
 
-    public int getRestaurantId() { return restaurantId; }
+    public long getRestaurantId() { return restaurantId; }
 
-    public void setRestaurantId(int restaurantId) { this.restaurantId = restaurantId; }
+    public void setRestaurantId(long restaurantId) { this.restaurantId = restaurantId; }
 }

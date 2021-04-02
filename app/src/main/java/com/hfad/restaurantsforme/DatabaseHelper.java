@@ -48,7 +48,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // foodRestaurant Table - column names
     private static final String KEY_RESTAURANT_ID = "restaurant_id";
 
-    // menu Table - column names
+    // food Table - column names
     private static final String KEY_PRIX = "prix";
 
     // Table Create Statements
@@ -94,7 +94,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             KEY_NOM + " TEXT, " +
             KEY_IMAGE + " INTEGER, "+
             KEY_DESCRIPTION + " TEXT, "+
-            KEY_PRIX + " INTEGER"+")";
+            KEY_PRIX + " INTEGER, " +
+            KEY_RESTAURANT_ID + " INTEGER"+")";
 
     public DatabaseHelper(Context context){
         super(context,DATABASE_NAME,null,DATABASE_VERSION);

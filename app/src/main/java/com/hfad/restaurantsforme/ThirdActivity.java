@@ -88,7 +88,6 @@ public class ThirdActivity extends Activity {
             db.createFood(seffa);
             db.createFood(sushi);
 
-            Log.d("restaurant count","Restaurants Count: " + db.getAllRestaurants().size());
             db.close();
         }
 

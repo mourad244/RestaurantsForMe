@@ -32,7 +32,6 @@
 
             />
         <EditText
-            android:visibility="visible"
             android:id="@+id/foodNom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -117,7 +116,7 @@
             />
         <EditText
             android:visibility="visible"
-            android:id="@+id/txtNom"
+            android:id="@+id/prixFood"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="2"
@@ -135,11 +134,12 @@
     </LinearLayout>
     <Button
         android:layout_marginTop="20dp"
-        android:id="@+id/valider"
+        android:id="@+id/validerFood"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="ajouter " />
+        android:text="ajouter "
+        />
 
 
 </LinearLayout>

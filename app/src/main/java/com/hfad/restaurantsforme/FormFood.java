@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,9 +22,10 @@ public class FormFood extends Activity {
     private static final int GALLERY_REQUEST = 1;
     DatabaseHelper db;
     ImageView imageFood;
+    EditText nomFood,descriptionFood, prixFood;
     Restaurant restaurant;
     TextView nomRestaurant;
-    Button uploadFoodBtn;
+    Button uploadFoodBtn, validerFood;
     @Override
     protected void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
@@ -49,12 +51,29 @@ public class FormFood extends Activity {
         });
 
 
+        // bind view with classe
+        nomFood = findViewById(R.id.foodNom);
+        imageFood = findViewById(R.id.imageFood);
+        descriptionFood = findViewById(R.id.foodDescription);
+        prixFood = findViewById(R.id.prixFood);
+
+        validerFood = findViewById(R.id.validerFood);
+        validerFood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Food food = new Food(nomFood.getText().toString(),R.id.imageFood,
+                        descriptionFood.getText().toString(), Integer.parseInt(prixFood.getText().toString())
+                        ,restaurantId);
+                db= new DatabaseHelper(getApplicationContext());
+                db.createFood(food);
+            }
+        });
+
+
     }
     @Override
     protected void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
-
-
 
         if (resultCode == RESULT_OK) {
             try {
@@ -73,4 +92,5 @@ public class FormFood extends Activity {
             Toast.makeText(FormFood.this, "You haven't picked Image",Toast.LENGTH_LONG).show();
         }
     }
+
 }

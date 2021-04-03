@@ -64,7 +64,7 @@ public class AdminActivity extends Activity {
                 List listNomFilteredRestau = new ArrayList();
 
                 for (Restaurant restaurant: listFilteredRestaurants
-                     ) {
+                ) {
                     listNomFilteredRestau.add(restaurant.getId()+". "+ restaurant.getNom());
                 }
 

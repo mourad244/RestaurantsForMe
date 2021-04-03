@@ -81,12 +81,13 @@ public class SecondActivity extends AppCompatActivity {
 
             // Inserting tag food in db
             db.createTagFood(tags);
+            db.closeDB();
         }
 
 //        Log.d("Categorie count","Categorie Count: " + db.getAllCategorieFoods().size());
-
+        db = new DatabaseHelper(getApplicationContext());
         categorieFoodList = db.getAllCategorieFoods();
-        GridView gridView = (GridView) findViewById(R.id.gvFood);
+        GridView gridView = findViewById(R.id.gvFood);
         CategorieAdapter categorieAdapter = new CategorieAdapter(categorieFoodList,this);
         gridView.setAdapter(categorieAdapter);
 

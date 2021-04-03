@@ -39,9 +39,10 @@
         </activity>
         <activity android:name=".MapsActivity"/>
         <activity android:name=".ThirdActivity"/>
-        <activity android:name=".AuthenActivity">
-
-        </activity>
+        <activity android:name=".AuthenActivity"/>
+        <activity android:name=".AdminActivity"/>
+        <activity android:name=".FormRestaurant"/>
+        <activity android:name=".FormFood"/>
     </application>
 
 </manifest>

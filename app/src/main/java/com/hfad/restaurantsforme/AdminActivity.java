@@ -1,197 +1,113 @@
 package com.hfad.restaurantsforme;
 
-
 import android.app.Activity;
-import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AdminActivity extends Activity {
-    TextView messageText;
-    Button uploadButton;
-    int serverResponseCode = 0;
-    ProgressDialog dialog = null;
 
-    String upLoadServerUri = null;
-
-
+    LinearLayout layout;
+    EditText filteredRestaurant;
+    ListView listFiltered;
+    DatabaseHelper db;
+    List<Restaurant> restaurantList;
+    Button formFoodBtn;
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
+    }
 
-        uploadButton = (Button)findViewById(R.id.uploadBtn);
-        messageText  = (TextView)findViewById(R.id.txtupload);
+    public void formRestaurant(View v) {
+        Intent intent = new Intent(AdminActivity.this,FormRestaurant.class);
+        startActivity(intent);
+    }
 
 
+    public void searchRestaurant(View v){
+        layout = findViewById(R.id.searchingRestau);
+        if(layout.getVisibility() == View.GONE){
+            layout.setVisibility(View.VISIBLE);
+        } else layout.setVisibility(View.GONE);
 
+        filteredRestaurant = findViewById(R.id.searchRestaurant);
 
-        uploadButton.setOnClickListener(new View.OnClickListener() {
+        filteredRestaurant.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
-                dialog = ProgressDialog.show(AdminActivity.this, "", "Uploading file...", true);
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                formFoodBtn = findViewById(R.id.ajouterFood);
+                listFiltered = findViewById(R.id.filteredRestau);
+                if (listFiltered.getVisibility() == View.GONE &&
+                        formFoodBtn.isClickable() == true){
 
-                new Thread(new Runnable() {
-                    public void run() {
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                messageText.setText("uploading started.....");
+                    listFiltered.setVisibility(View.VISIBLE);
+                    formFoodBtn.setClickable(false);
+                }
+
+                List<Restaurant> listFilteredRestaurants = searching(filteredRestaurant
+                        .getText().toString());
+                List listNomFilteredRestau = new ArrayList();
+
+                for (Restaurant restaurant: listFilteredRestaurants
+                     ) {
+                    listNomFilteredRestau.add(restaurant.getId()+". "+ restaurant.getNom());
+                }
+
+                ArrayAdapter<String> adapter = new ArrayAdapter(AdminActivity.this,
+                        android.R.layout.simple_list_item_1,listNomFilteredRestau);
+                listFiltered.setAdapter(adapter);
+                listFiltered.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        String[] restaurant = adapter.getItem(position).split("\\.");
+                        String nomRrestaurant = restaurant[1].trim();
+                        filteredRestaurant.setText(nomRrestaurant);
+                        listFiltered.setVisibility(View.GONE);
+                        formFoodBtn.setClickable(true);
+                        formFoodBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(AdminActivity.this,FormFood.class);
+                                int restaurantId = Integer.parseInt(restaurant[0]);
+                                intent.putExtra("restaurantId",restaurantId);
+                                startActivity(intent);
                             }
                         });
-
-                        uploadFile(uploadFilePath + "" + uploadFileName);
-
                     }
-                }).start();
+                });
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
             }
         });
     }
+    private List<Restaurant> searching(String text){
+        db= new DatabaseHelper(getApplicationContext());
+        List<Restaurant> filteredRestaurants = new ArrayList();
+        boolean founded;
+        restaurantList = db.getAllRestaurants();
 
-    public int uploadFile(String sourceFileUri) {
-
-
-        String fileName = sourceFileUri;
-
-        HttpURLConnection conn = null;
-        DataOutputStream dos = null;
-        String lineEnd = "\r\n";
-        String twoHyphens = "--";
-        String boundary = "*****";
-        int bytesRead, bytesAvailable, bufferSize;
-        byte[] buffer;
-        int maxBufferSize = 1 * 1024 * 1024;
-        File sourceFile = new File(sourceFileUri);
-
-        if (!sourceFile.isFile()) {
-
-            dialog.dismiss();
-
-            Log.e("uploadFile", "Source File not exist :"
-                    +uploadFilePath + "" + uploadFileName);
-
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    messageText.setText("Source File not exist :"
-                            +uploadFilePath + "" + uploadFileName);
-                }
-            });
-
-            return 0;
-
+        for(int i =0; i < restaurantList.size();i++){
+            founded = restaurantList.get(i).getNom().toLowerCase().contains(text);
+            if (founded) filteredRestaurants.add(restaurantList.get(i));
         }
-        else
-        {
-            try {
-
-                // open a URL connection to the Servlet
-                FileInputStream fileInputStream = new FileInputStream(sourceFile);
-                URL url = new URL(upLoadServerUri);
-
-                // Open a HTTP  connection to  the URL
-                conn = (HttpURLConnection) url.openConnection();
-                conn.setDoInput(true); // Allow Inputs
-                conn.setDoOutput(true); // Allow Outputs
-                conn.setUseCaches(false); // Don't use a Cached Copy
-                conn.setRequestMethod("POST");
-                conn.setRequestProperty("Connection", "Keep-Alive");
-                conn.setRequestProperty("ENCTYPE", "multipart/form-data");
-                conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-                conn.setRequestProperty("uploaded_file", fileName);
-
-                dos = new DataOutputStream(conn.getOutputStream());
-
-                dos.writeBytes(twoHyphens + boundary + lineEnd);
-                dos.writeBytes("Content-Disposition: form-data; name="uploaded_file";" +
-                        "filename="" + fileName + """ + lineEnd);
-
-                   dos.writeBytes(lineEnd);
-
-                   // create a buffer of  maximum size
-                   bytesAvailable = fileInputStream.available();
-
-                   bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                   buffer = new byte[bufferSize];
-
-                   // read file and write it into form...
-                   bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-
-                   while (bytesRead > 0) {
-
-                     dos.write(buffer, 0, bufferSize);
-                     bytesAvailable = fileInputStream.available();
-                     bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                     bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-
-                    }
-
-                   // send multipart form data necesssary after file data...
-                   dos.writeBytes(lineEnd);
-                   dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-
-                   // Responses from the server (code and message)
-                   serverResponseCode = conn.getResponseCode();
-                   String serverResponseMessage = conn.getResponseMessage();
-
-                   Log.i("uploadFile", "HTTP Response is : "
-                           + serverResponseMessage + ": " + serverResponseCode);
-
-                   if(serverResponseCode == 200){
-
-                       runOnUiThread(new Runnable() {
-                            public void run() {
-
-                                String msg = "File Upload Completed.\n\n See uploaded file here : \n\n"
-                                              +" http://www.androidexample.com/media/uploads/"
-                                              +uploadFileName;
-
-                                messageText.setText(msg);
-                                Toast.makeText(UploadToServer.this, "File Upload Complete.",
-                                             Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                   }
-
-                   //close the streams //
-                   fileInputStream.close();
-                   dos.flush();
-                   dos.close();
-
-              } catch (MalformedURLException ex) {
-
-                  dialog.dismiss();
-                  ex.printStackTrace();
-
-                  runOnUiThread(new Runnable() {
-                      public void run() {
-                          messageText.setText("MalformedURLException Exception : check script url.");
-                          Toast.makeText(UploadToServer.this, "MalformedURLException",
-                                                              Toast.LENGTH_SHORT).show();
-                      }
-                  });
-
-                  Log.e("Upload file to server", "error: " + ex.getMessage(), ex);
-              } catch (Exception e) {
-
-                  dialog.dismiss();
-                  e.printStackTrace();
-
-                  runOnUiThread(new Runnable() {
-                      public void run() {
-                          messageText.setText("Got Exception : see logcat ");
-                          Toast.makeText(UploadToServer.this, "Got Exception : see logcat ",
-                                  Toast.LENGTH_SHORT).show();
-                      }
-                  });
-                  Log.e("Upload file to server Exception", "Exception : "
-                                                   + e.getMessage(), e);
-              }
-              dialog.dismiss();
-              return serverResponseCode;
-
-           } // End else block
-         }
+        return filteredRestaurants;
+    }
 }

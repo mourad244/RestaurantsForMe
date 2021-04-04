@@ -1,9 +1,11 @@
 package com.hfad.restaurantsforme;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -66,11 +68,12 @@ public class FormRestaurant extends Activity {
         validerRestau.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bitmap bitmap = ((BitmapDrawable) imageRestau.getDrawable()).getBitmap();
                 Restaurant restaurant = new Restaurant(nomRestau.getText().toString(),
-                        R.id.imageRestau,
+                        DbBitmapUtility.getBytes(bitmap),
                         descriptionRestau.getText().toString(),ouvertureRestau.getText().toString(),
                         fermetureRestau.getText().toString(),
-                        telephoneRestau.getText().toString(),R.id.imageQRCode,
+                        telephoneRestau.getText().toString(),
                         Double.parseDouble(latitudeRestau.getText().toString()),
                         Double.parseDouble(longitudeRestau.getText().toString()));
                 db= new DatabaseHelper(getApplicationContext());
@@ -84,6 +87,7 @@ public class FormRestaurant extends Activity {
     @Override
     protected void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
+        ContentValues image = new ContentValues();
 
         if (resultCode == RESULT_OK) {
             try {

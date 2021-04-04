@@ -1,6 +1,7 @@
 package com.hfad.restaurantsforme;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +53,9 @@ public class CategorieAdapter extends BaseAdapter {
         final TextView nom = (TextView)convertView.findViewById(R.id.tv_categorie_nom);
 
         //4
-        image.setImageResource(categorieFood.getImage());
+
+        DbBitmapUtility.setImageViewWithByteArray(image,categorieFood.getImage());
+
         nom.setText(categorieFood.getNom());
 
        return convertView;

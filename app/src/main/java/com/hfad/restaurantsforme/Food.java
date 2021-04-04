@@ -3,13 +3,13 @@ package com.hfad.restaurantsforme;
 public class Food {
     private int id;
     private String nom;
-    private int image;
+    private byte[] image;
     private String description;
     private int prix;
     private long restaurantId;
 
     public Food(){};
-    public Food(String nom, int image, String description, int prix, long restaurantId){
+    public Food(String nom, byte[] image, String description, int prix, long restaurantId){
         this.nom = nom;
         this.image = image;
         this.description = description;
@@ -22,7 +22,7 @@ public class Food {
         this.prix = prix;
         this.restaurantId = restaurantId;
     }
-    public Food(int id, String nom, int image, String description, int prix, long restaurantId){
+    public Food(int id, String nom, byte[] image, String description, int prix, long restaurantId){
         this.id = id;
         this.nom = nom;
         this.image = image;
@@ -39,9 +39,9 @@ public class Food {
 
     public void setNom(String nom) { this.nom = nom; }
 
-    public int getImage() { return image; }
+    public byte[] getImage() { return image; }
 
-    public void setImage(int image) { this.image = image; }
+    public void setImage(byte[] image) { this.image = image; }
 
     public String getDescription() { return description; }
 

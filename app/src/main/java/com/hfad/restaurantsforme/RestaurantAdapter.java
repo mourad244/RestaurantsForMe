@@ -51,7 +51,8 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant>  {
         TextView distance =convertView.findViewById(R.id.distance);
         TextView status = convertView.findViewById(R.id.status);
 
-        image.setImageResource(getItem(position).getImage());
+        DbBitmapUtility.setImageViewWithByteArray(image,getItem(position).getImage());
+
         nom.setText(getItem(position).getNom());
 
         // -----------------status (calculating hour)-------------------- ----

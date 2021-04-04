@@ -2,6 +2,9 @@ package com.hfad.restaurantsforme;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,22 +36,30 @@ public class ThirdActivity extends Activity {
         // Check if table restaurant is empty to add restaurant
         if(db.getAllRestaurants().isEmpty()){
             // Create restaurant
-            Restaurant restaurant1 = new Restaurant("mini world",R.drawable.icon_restau,
+            Bitmap icon1 = BitmapFactory.decodeResource(this.getResources(),
+                    R.drawable.icon_restau);
+            Bitmap icon2 = BitmapFactory.decodeResource(this.getResources(),
+                    R.drawable.icon_restau);
+            Bitmap icon3 = BitmapFactory.decodeResource(this.getResources(),
+                    R.drawable.icon_restau);
+            Bitmap icon4 = BitmapFactory.decodeResource(this.getResources(),
+                    R.drawable.icon_restau);
+            Restaurant restaurant1 = new Restaurant("mini world",DbBitmapUtility.getBytes(icon1),
                     "1","09:00","21:00",
-                    "0513251435",R.drawable.qr_code_ex,
+                    "0513251435",
                     -6.592709,34.254067);
 
-            Restaurant restaurant2 = new Restaurant("mini chicken",R.drawable.icon_restau,
+            Restaurant restaurant2 = new Restaurant("mini chicken",DbBitmapUtility.getBytes(icon2),
                     "2","09:00","23:00",
-                    "0514951435",R.drawable.qr_code_ex,
+                    "0514951435",
                     -6.593478,34.259726);
-            Restaurant restaurant3 = new Restaurant("pizza hut",R.drawable.icon_restau,
+            Restaurant restaurant3 = new Restaurant("pizza hut",DbBitmapUtility.getBytes(icon3),
                     "3","09:00","22:00",
-                    "0515671435",R.drawable.qr_code_ex,
+                    "0515671435",
                     -6.581346,34.257065);
-            Restaurant restaurant4 = new Restaurant("Macdonald",R.drawable.icon_restau,
+            Restaurant restaurant4 = new Restaurant("Macdonald",DbBitmapUtility.getBytes(icon4),
                     "4","07:00","23:00",
-                    "0516671435",R.drawable.qr_code_ex,
+                    "0516671435",
                     -6.595930,34.262264);
 
             long restaurant1Id = db.createRestaurant(restaurant1);

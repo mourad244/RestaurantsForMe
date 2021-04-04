@@ -162,7 +162,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Food food = new Food();
                 food.setId(c.getInt(c.getColumnIndex(KEY_ID)));
                 food.setNom(c.getString(c.getColumnIndex(KEY_NOM)));
-                food.setImage(c.getInt(c.getColumnIndex(KEY_IMAGE)));
+                food.setImage(c.getBlob(c.getColumnIndex(KEY_IMAGE)));
                 food.setDescription(c.getString(c.getColumnIndex(KEY_DESCRIPTION)));
                 food.setPrix(c.getInt(c.getColumnIndex(KEY_PRIX)));
                 food.setRestaurantId(c.getInt(c.getColumnIndex(KEY_RESTAURANT_ID)));
@@ -320,12 +320,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Restaurant restaurant = new Restaurant();
                 restaurant.setId(c.getInt(c.getColumnIndex(KEY_ID)));
                 restaurant.setNom(c.getString(c.getColumnIndex(KEY_NOM)));
-                restaurant.setImage(c.getInt(c.getColumnIndex(KEY_IMAGE)));
+                restaurant.setImage(c.getBlob(c.getColumnIndex(KEY_IMAGE)));
                 restaurant.setDescription(c.getString(c.getColumnIndex(KEY_DESCRIPTION)));
                 restaurant.setH_fermeture(c.getString(c.getColumnIndex(KEY_H_FERMETURE)));
                 restaurant.setH_ouverture(c.getString(c.getColumnIndex(KEY_H_OUVERTURE)));
                 restaurant.setTelephone(c.getString(c.getColumnIndex(KEY_TELEPHONE)));
-                restaurant.setQR_code(c.getInt(c.getColumnIndex(KEY_QR_CODE)));
+                restaurant.setQR_code(c.getBlob(c.getColumnIndex(KEY_QR_CODE)));
                 restaurant.setLongitude(c.getDouble(c.getColumnIndex(KEY_LONGITUDE)));
                 restaurant.setLatitude(c.getDouble(c.getColumnIndex(KEY_LATITUDE)));
 
@@ -356,7 +356,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 CategorieFood categorie = new CategorieFood();
                 categorie.setId(c.getInt(c.getColumnIndex(KEY_ID)));
                 categorie.setNom(c.getString(c.getColumnIndex(KEY_NOM)));
-                categorie.setImage(c.getInt(c.getColumnIndex(KEY_IMAGE)));
+                categorie.setImage(c.getBlob(c.getColumnIndex(KEY_IMAGE)));
 
                 // adding to categorie food list
                 categorieFoods.add(categorie);
@@ -429,12 +429,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Restaurant r = new Restaurant();
                 r.setId(c.getInt(c.getColumnIndex(KEY_ID)));
                 r.setNom(c.getString(c.getColumnIndex(KEY_NOM)));
-                r.setImage(c.getInt(c.getColumnIndex(KEY_IMAGE)));
+                r.setImage(c.getBlob(c.getColumnIndex(KEY_IMAGE)));
                 r.setDescription(c.getString(c.getColumnIndex(KEY_DESCRIPTION)));
                 r.setH_ouverture(c.getString(c.getColumnIndex(KEY_H_OUVERTURE)));
                 r.setH_fermeture(c.getString(c.getColumnIndex(KEY_H_FERMETURE)));
                 r.setTelephone(c.getString(c.getColumnIndex(KEY_TELEPHONE)));
-                r.setQR_code(c.getInt(c.getColumnIndex(KEY_QR_CODE)));
+                r.setQR_code(c.getBlob(c.getColumnIndex(KEY_QR_CODE)));
                 r.setLongitude(c.getDouble(c.getColumnIndex(KEY_LONGITUDE)));
                 r.setLatitude(c.getDouble(c.getColumnIndex(KEY_LATITUDE)));
 
@@ -477,7 +477,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         CategorieFood categorie = new CategorieFood();
         categorie.setId(c.getInt(c.getColumnIndex(KEY_ID)));
         categorie.setNom(c.getString(c.getColumnIndex(KEY_NOM)));
-        categorie.setImage(c.getInt(c.getColumnIndex(KEY_IMAGE)));
+        categorie.setImage(c.getBlob(c.getColumnIndex(KEY_IMAGE)));
 
         return categorie;
     }
@@ -498,12 +498,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Restaurant restaurant = new Restaurant();
         restaurant.setId(c.getInt(c.getColumnIndex(KEY_ID)));
         restaurant.setNom(c.getString(c.getColumnIndex(KEY_NOM)));
-        restaurant.setImage(c.getInt(c.getColumnIndex(KEY_IMAGE)));
+        restaurant.setImage(c.getBlob(c.getColumnIndex(KEY_IMAGE)));
         restaurant.setDescription(c.getString(c.getColumnIndex(KEY_DESCRIPTION)));
         restaurant.setH_ouverture(c.getString(c.getColumnIndex(KEY_H_OUVERTURE)));
         restaurant.setH_fermeture(c.getString(c.getColumnIndex(KEY_H_FERMETURE)));
         restaurant.setTelephone(c.getString(c.getColumnIndex(KEY_TELEPHONE)));
-        restaurant.setQR_code(c.getInt(c.getColumnIndex(KEY_QR_CODE)));
+        restaurant.setQR_code(c.getBlob(c.getColumnIndex(KEY_QR_CODE)));
         restaurant.setLongitude(c.getDouble(c.getColumnIndex(KEY_LONGITUDE)));
         restaurant.setLatitude(c.getDouble(c.getColumnIndex(KEY_LATITUDE)));
         db.close();

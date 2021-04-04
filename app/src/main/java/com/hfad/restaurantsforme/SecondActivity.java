@@ -2,6 +2,8 @@ package com.hfad.restaurantsforme;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,12 +29,31 @@ public class SecondActivity extends AppCompatActivity {
         // Check if table categorieFood is empty to add categorie of food
         if(db.getAllCategorieFoods().isEmpty()){
             // Creating categorie of food
-            CategorieFood pizza = new CategorieFood("Pizza",R.drawable.pizza_icon);
-            CategorieFood fastFood = new CategorieFood("Fast Food",R.drawable.fastfood_icon);
-            CategorieFood tacos = new CategorieFood("Tacos",R.drawable.tacos_icon);
-            CategorieFood marocain = new CategorieFood("Marocain",R.drawable.marocain_icon);
-            CategorieFood asiatique = new CategorieFood("Asiatique",R.drawable.asiatique_icon);
-            CategorieFood italien = new CategorieFood("Italien",R.drawable.italien_icon);
+            Bitmap icon1 = BitmapFactory.decodeResource(this.getResources(),
+                    R.drawable.pizza_icon);
+            Bitmap icon2 = BitmapFactory.decodeResource(this.getResources(),
+                    R.drawable.pizza_icon);
+            Bitmap icon3 = BitmapFactory.decodeResource(this.getResources(),
+                    R.drawable.pizza_icon);
+            Bitmap icon4 = BitmapFactory.decodeResource(this.getResources(),
+                    R.drawable.pizza_icon);
+            Bitmap icon5 = BitmapFactory.decodeResource(this.getResources(),
+                    R.drawable.pizza_icon);
+            Bitmap icon6 = BitmapFactory.decodeResource(this.getResources(),
+                    R.drawable.pizza_icon);
+
+            CategorieFood pizza = new CategorieFood("Pizza",
+                    DbBitmapUtility.getBytes(icon1));
+            CategorieFood fastFood = new CategorieFood("Fast Food",
+                    DbBitmapUtility.getBytes(icon2));
+            CategorieFood tacos = new CategorieFood("Tacos",
+                    DbBitmapUtility.getBytes(icon3));
+            CategorieFood marocain = new CategorieFood("Marocain",
+                    DbBitmapUtility.getBytes(icon4));
+            CategorieFood asiatique = new CategorieFood("Asiatique",
+                    DbBitmapUtility.getBytes(icon5));
+            CategorieFood italien = new CategorieFood("Italien",
+                    DbBitmapUtility.getBytes(icon6));
 
             // Inserting categorie of food in db
 

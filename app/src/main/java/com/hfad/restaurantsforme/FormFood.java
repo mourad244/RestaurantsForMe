@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +17,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 
 public class FormFood extends Activity {
@@ -61,9 +67,15 @@ public class FormFood extends Activity {
         validerFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Food food = new Food(nomFood.getText().toString(),R.id.imageFood,
+                BitmapDrawable drawable = (BitmapDrawable) imageFood.getDrawable();
+                Bitmap bitmap = drawable.getBitmap();
+                byte[] imageByte=  DbBitmapUtility.getBytes(bitmap);
+
+
+                Food food = new Food(nomFood.getText().toString(),imageByte,
                         descriptionFood.getText().toString(), Integer.parseInt(prixFood.getText().toString())
                         ,restaurantId);
+
                 db= new DatabaseHelper(getApplicationContext());
                 db.createFood(food);
                 Intent intent = new Intent(FormFood.this,AdminActivity.class);
@@ -73,6 +85,7 @@ public class FormFood extends Activity {
 
 
     }
+
     @Override
     protected void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
@@ -83,8 +96,11 @@ public class FormFood extends Activity {
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 
+
                 imageFood = findViewById(R.id.imageFood);
                 imageFood.setImageBitmap(selectedImage);
+
+
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 Toast.makeText(FormFood.this, "Something went wrong", Toast.LENGTH_LONG).show();
@@ -94,5 +110,4 @@ public class FormFood extends Activity {
             Toast.makeText(FormFood.this, "You haven't picked Image",Toast.LENGTH_LONG).show();
         }
     }
-
 }

@@ -66,6 +66,8 @@ public class FormFood extends Activity {
                         ,restaurantId);
                 db= new DatabaseHelper(getApplicationContext());
                 db.createFood(food);
+                Intent intent = new Intent(FormFood.this,AdminActivity.class);
+                startActivity(intent);
             }
         });
 

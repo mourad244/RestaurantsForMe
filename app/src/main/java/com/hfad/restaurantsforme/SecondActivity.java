@@ -54,6 +54,7 @@ public class SecondActivity extends AppCompatActivity {
             TagFood seffa = new TagFood("seffa",4);
             TagFood rfissa = new TagFood("rfissa",4);
             TagFood couscous = new TagFood("couscous",4);
+            TagFood marocain = new TagFood("marocain",4);
             TagFood harira = new TagFood("harira",4);
             TagFood tajine = new TagFood("tajine",4);
             TagFood sushi = new TagFood("sushi",5);
@@ -78,6 +79,7 @@ public class SecondActivity extends AppCompatActivity {
             tags.add(saumon);
             tags.add(sishmi);
             tags.add(pasta);
+            tags.add(marocain);
 
             // Inserting tag food in db
             db.createTagFood(tags);

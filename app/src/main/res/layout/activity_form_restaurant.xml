@@ -20,7 +20,6 @@
 
             />
         <EditText
-            android:visibility="visible"
             android:id="@+id/txtNom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -113,7 +112,7 @@
             android:layout_height="wrap_content"
             android:text="Fermeture"
             android:textSize="20sp"
-            android:layout_marginStart="70dp"
+            android:layout_marginStart="30dp"
             />
         <EditText
             android:id="@+id/txtHFermeture"
@@ -217,7 +216,7 @@
             android:hint="-6.179854" />
     </LinearLayout>
     <Button
-        android:id="@+id/valider"
+        android:id="@+id/validerRestaurant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

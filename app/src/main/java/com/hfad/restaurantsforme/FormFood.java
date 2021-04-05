@@ -67,14 +67,13 @@ public class FormFood extends Activity {
         validerFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BitmapDrawable drawable = (BitmapDrawable) imageFood.getDrawable();
-                Bitmap bitmap = drawable.getBitmap();
-                byte[] imageByte=  DbBitmapUtility.getBytes(bitmap);
+                byte[] imageFoodByte = DbBitmapUtility.imageViewToByte(imageFood);
 
-
-                Food food = new Food(nomFood.getText().toString(),imageByte,
-                        descriptionFood.getText().toString(), Integer.parseInt(prixFood.getText().toString())
-                        ,restaurantId);
+                Food food = new Food(nomFood.getText().toString(),
+                        imageFoodByte,
+                        descriptionFood.getText().toString(),
+                        Integer.parseInt(prixFood.getText().toString()),
+                        restaurantId);
 
                 db= new DatabaseHelper(getApplicationContext());
                 db.createFood(food);

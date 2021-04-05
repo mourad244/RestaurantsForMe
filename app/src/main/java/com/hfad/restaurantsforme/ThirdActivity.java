@@ -35,6 +35,7 @@ public class ThirdActivity extends Activity {
 
         // Check if table restaurant is empty to add restaurant
         if(db.getAllRestaurants().isEmpty()){
+
             // Create restaurant
             Bitmap icon1 = BitmapFactory.decodeResource(this.getResources(),
                     R.drawable.icon_restau);
@@ -46,21 +47,21 @@ public class ThirdActivity extends Activity {
                     R.drawable.icon_restau);
             Restaurant restaurant1 = new Restaurant("mini world",DbBitmapUtility.getBytes(icon1),
                     "1","09:00","21:00",
-                    "0513251435",
-                    -6.592709,34.254067);
+                    "0513251435",34.254067,
+                    -6.592709);
 
             Restaurant restaurant2 = new Restaurant("mini chicken",DbBitmapUtility.getBytes(icon2),
                     "2","09:00","23:00",
-                    "0514951435",
-                    -6.593478,34.259726);
+                    "0514951435",34.259726,
+                    -6.593478);
             Restaurant restaurant3 = new Restaurant("pizza hut",DbBitmapUtility.getBytes(icon3),
                     "3","09:00","22:00",
-                    "0515671435",
-                    -6.581346,34.257065);
+                    "0515671435",34.257065,
+                    -6.581346);
             Restaurant restaurant4 = new Restaurant("Macdonald",DbBitmapUtility.getBytes(icon4),
                     "4","07:00","23:00",
-                    "0516671435",
-                    -6.595930,34.262264);
+                    "0516671435",34.262264,
+                    -6.595930);
 
             long restaurant1Id = db.createRestaurant(restaurant1);
             long restaurant2Id = db.createRestaurant(restaurant2);

@@ -29,31 +29,31 @@ public class SecondActivity extends AppCompatActivity {
         // Check if table categorieFood is empty to add categorie of food
         if(db.getAllCategorieFoods().isEmpty()){
             // Creating categorie of food
-            Bitmap icon1 = BitmapFactory.decodeResource(this.getResources(),
+            Bitmap pizzaMap = BitmapFactory.decodeResource(this.getResources(),
                     R.drawable.pizza_icon);
-            Bitmap icon2 = BitmapFactory.decodeResource(this.getResources(),
-                    R.drawable.pizza_icon);
-            Bitmap icon3 = BitmapFactory.decodeResource(this.getResources(),
-                    R.drawable.pizza_icon);
-            Bitmap icon4 = BitmapFactory.decodeResource(this.getResources(),
-                    R.drawable.pizza_icon);
-            Bitmap icon5 = BitmapFactory.decodeResource(this.getResources(),
-                    R.drawable.pizza_icon);
-            Bitmap icon6 = BitmapFactory.decodeResource(this.getResources(),
-                    R.drawable.pizza_icon);
+            Bitmap fastFoodMap = BitmapFactory.decodeResource(this.getResources(),
+                    R.drawable.fastfood_icon);
+            Bitmap tacosMap = BitmapFactory.decodeResource(this.getResources(),
+                    R.drawable.tacos_icon);
+            Bitmap marocainMap = BitmapFactory.decodeResource(this.getResources(),
+                    R.drawable.marocain_icon);
+            Bitmap asiatiqueMap = BitmapFactory.decodeResource(this.getResources(),
+                    R.drawable.asiatique_icon);
+            Bitmap italienMap = BitmapFactory.decodeResource(this.getResources(),
+                    R.drawable.italien_icon);
 
             CategorieFood pizza = new CategorieFood("Pizza",
-                    DbBitmapUtility.getBytes(icon1));
+                    DbBitmapUtility.getBytes(pizzaMap));
             CategorieFood fastFood = new CategorieFood("Fast Food",
-                    DbBitmapUtility.getBytes(icon2));
+                    DbBitmapUtility.getBytes(fastFoodMap));
             CategorieFood tacos = new CategorieFood("Tacos",
-                    DbBitmapUtility.getBytes(icon3));
+                    DbBitmapUtility.getBytes(tacosMap));
             CategorieFood marocain = new CategorieFood("Marocain",
-                    DbBitmapUtility.getBytes(icon4));
+                    DbBitmapUtility.getBytes(marocainMap));
             CategorieFood asiatique = new CategorieFood("Asiatique",
-                    DbBitmapUtility.getBytes(icon5));
+                    DbBitmapUtility.getBytes(asiatiqueMap));
             CategorieFood italien = new CategorieFood("Italien",
-                    DbBitmapUtility.getBytes(icon6));
+                    DbBitmapUtility.getBytes(italienMap));
 
             // Inserting categorie of food in db
 

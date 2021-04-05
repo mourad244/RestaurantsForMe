@@ -68,12 +68,15 @@ public class FormRestaurant extends Activity {
         validerRestau.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bitmap bitmap = ((BitmapDrawable) imageRestau.getDrawable()).getBitmap();
+                byte[] imageRestauByte = DbBitmapUtility.imageViewToByte(imageRestau);
+                byte[] imageQRCodeByte = DbBitmapUtility.imageViewToByte(imageRestau);
+
+
                 Restaurant restaurant = new Restaurant(nomRestau.getText().toString(),
-                        DbBitmapUtility.getBytes(bitmap),
-                        descriptionRestau.getText().toString(),ouvertureRestau.getText().toString(),
+                        imageRestauByte, descriptionRestau.getText().toString(),
+                        ouvertureRestau.getText().toString(),
                         fermetureRestau.getText().toString(),
-                        telephoneRestau.getText().toString(),
+                        telephoneRestau.getText().toString(),imageQRCodeByte,
                         Double.parseDouble(latitudeRestau.getText().toString()),
                         Double.parseDouble(longitudeRestau.getText().toString()));
                 db= new DatabaseHelper(getApplicationContext());
@@ -87,7 +90,6 @@ public class FormRestaurant extends Activity {
     @Override
     protected void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
-        ContentValues image = new ContentValues();
 
         if (resultCode == RESULT_OK) {
             try {

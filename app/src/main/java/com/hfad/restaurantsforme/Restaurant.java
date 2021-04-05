@@ -16,8 +16,8 @@ public class Restaurant {
     public Restaurant (){};
 
     public Restaurant (String nom, byte[] image, String description, String h_ouverture,
-                       String h_fermeture, String telephone, byte[] QR_code, Double longitude,
-                       Double latitude){
+                       String h_fermeture, String telephone, byte[] QR_code,Double latitude,
+                       Double longitude ){
         this.nom = nom;
         this.image = image;
         this.description = description;
@@ -29,8 +29,8 @@ public class Restaurant {
         this.latitude = latitude;
     }
     public Restaurant (String nom, byte[] image, String description, String h_ouverture,
-                       String h_fermeture, String telephone, Double longitude,
-                       Double latitude){
+                       String h_fermeture, String telephone, Double latitude,Double longitude
+                       ){
         this.nom = nom;
         this.image = image;
         this.description = description;
@@ -42,8 +42,8 @@ public class Restaurant {
     }
 
     public Restaurant (int id, String nom, byte[] image, String description, String h_ouverture,
-                       String h_fermeture, String telephone, byte[] QR_code, Double longitude,
-                       Double latitude){
+                       String h_fermeture, String telephone, byte[] QR_code,
+                       Double latitude, Double longitude){
         this.id = id;
         this.nom = nom;
         this.image = image;

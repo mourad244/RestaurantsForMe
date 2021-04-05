@@ -18,7 +18,7 @@ public class SecondActivity extends AppCompatActivity {
     DatabaseHelper db;
 
     List<CategorieFood> categorieFoodList;
-
+    GridView gridView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,7 +110,7 @@ public class SecondActivity extends AppCompatActivity {
 //        Log.d("Categorie count","Categorie Count: " + db.getAllCategorieFoods().size());
         db = new DatabaseHelper(getApplicationContext());
         categorieFoodList = db.getAllCategorieFoods();
-        GridView gridView = findViewById(R.id.gvFood);
+        gridView = findViewById(R.id.gvFood);
         CategorieAdapter categorieAdapter = new CategorieAdapter(categorieFoodList,this);
         gridView.setAdapter(categorieAdapter);
 

@@ -30,7 +30,6 @@
         android:text="Afficher menu"/>
     <Button
         android:id="@+id/itineraire"
-        android:onClick="drawRoute"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Afficher itinéraire"/>

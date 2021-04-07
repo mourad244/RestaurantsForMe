@@ -6,10 +6,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -24,6 +30,12 @@ public class ThirdActivity extends Activity {
     @BindView(R.id.listView)
     ListView listView;
 
+    EditText filteredRestaurant;
+    ListView listFiltered;
+
+    List <Restaurant> restaurants ;
+
+    RestaurantAdapter restaurantAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -108,10 +120,10 @@ public class ThirdActivity extends Activity {
 
         db = new DatabaseHelper(getApplicationContext());
 
-        List <Restaurant> restaurants ;
+
         restaurants = db.getFoodRestaurants(id);
         db.close();
-        RestaurantAdapter restaurantAdapter = new RestaurantAdapter(this,R.layout.list_restaurant,restaurants);
+        restaurantAdapter = new RestaurantAdapter(this,R.layout.list_restaurant,restaurants);
         listView.setAdapter(restaurantAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -122,11 +134,47 @@ public class ThirdActivity extends Activity {
                 db = new DatabaseHelper(getApplicationContext());
                 long foodRestaurantId =  restaurants.get(position).getId();
                 long restaurantId = db.getRestaurantId(foodRestaurantId);
-
+                db.close();
                 intent1.putExtra("restaurantId",restaurantId);
                 startActivity(intent1);
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        filteredRestaurant = findViewById(R.id.search);
+        filteredRestaurant.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                List<Restaurant> listFilteredRestaurants = searching(filteredRestaurant
+                        .getText().toString());
+                if (filteredRestaurant.getText() != null){
+
+                    restaurantAdapter = new RestaurantAdapter(
+                            ThirdActivity.this,R.layout.list_restaurant,listFilteredRestaurants);
+                    listView.setAdapter(restaurantAdapter);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+    }
+    private List<Restaurant> searching(String text){
+        List<Restaurant> filteredRestaurants = new ArrayList();
+        boolean founded;
+
+        for(int i =0; i < restaurants.size();i++){
+            founded = restaurants.get(i).getNom().toLowerCase().contains(text);
+            if (founded) filteredRestaurants.add(restaurants.get(i));
+        }
+        return filteredRestaurants;
     }
 
 }

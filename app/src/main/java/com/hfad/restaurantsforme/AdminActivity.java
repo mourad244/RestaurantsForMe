@@ -53,7 +53,7 @@ public class AdminActivity extends Activity {
                 formFoodBtn = findViewById(R.id.ajouterFood);
                 listFiltered = findViewById(R.id.filteredRestau);
                 if (listFiltered.getVisibility() == View.GONE &&
-                        formFoodBtn.isClickable() == true){
+                        formFoodBtn.isClickable()){
 
                     listFiltered.setVisibility(View.VISIBLE);
                     formFoodBtn.setClickable(false);

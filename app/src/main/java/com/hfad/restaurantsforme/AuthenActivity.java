@@ -4,13 +4,20 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class AuthenActivity extends AppCompatActivity {
 
@@ -18,6 +25,9 @@ public class AuthenActivity extends AppCompatActivity {
     public static String PREF_USERNAME="username";
     public static String PREF_PASSWORD="password";
 
+    Retrofit retrofit = RetrofitFactory.getRetrofit();
+    RetrofitServices retrofitServices = retrofit
+            .create(RetrofitServices.class);
     @Nullable
     @BindView(R.id.sName)
     EditText Name;
@@ -26,8 +36,12 @@ public class AuthenActivity extends AppCompatActivity {
     @Nullable
     @BindView(R.id.msgError)
     TextView messageError;
-    /*@BindView(R.id.btnLogin) Button connecter;*/
 
+
+    @BindView(R.id.btnLogin)
+    Button connecter;
+
+    Button btnLogin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -41,12 +55,42 @@ public class AuthenActivity extends AppCompatActivity {
         connecter = (Button)findViewById(R.id.btnLogin);*/
     }
 
+
     @OnClick(R.id.btnLogin)
+
     public void onClick(View v) {
-        validate(Name.getText().toString(), Password.getText().toString());
+        Log.d("mss","done");
+        String email = Name.getText().toString();
+        String password = Password.getText().toString();
+
+        Login login = new Login(email,password);
+
+        Call call = retrofitServices.login(login);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Response<ResponseBody> response,Retrofit retrofit) {
+                Log.d("mss",  response.body());
+
+                if(response.isSuccessful()){
+                    //save username and password
+                    rememberMe(email,password);
+                    String token = response.body();
+                    Log.d("token1",token);
+                    Intent  intent =new Intent(AuthenActivity.this, AdminActivity.class);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+//        validate(Name.getText().toString(), Password.getText().toString());
     }
 
     private void  validate(String userName, String userPassword) {
+
         String username="mourad244";
         String password="1234";
         if ((userName.equals(username) && (userPassword.equals(password)))){

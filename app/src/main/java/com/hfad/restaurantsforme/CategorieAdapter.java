@@ -55,7 +55,6 @@ public class CategorieAdapter extends BaseAdapter {
         //4
 
         DbBitmapUtility.setImageViewWithByteArray(image,categorieFood.getImage());
-
         nom.setText(categorieFood.getNom());
 
        return convertView;

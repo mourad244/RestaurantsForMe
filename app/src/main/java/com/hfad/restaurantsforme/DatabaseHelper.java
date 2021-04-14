@@ -128,6 +128,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /*
     Create food
      */
+
     public long createFood(Food food){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -180,7 +181,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void sortRestaurantByCategorieeFood(long restaurantId){
         List <TagFood> tagFoodList = getAllTagFoods();
         List <Food> foods;
-
 
         foods = getFoodsByRestaurant(restaurantId);
 

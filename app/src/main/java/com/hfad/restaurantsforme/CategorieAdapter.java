@@ -1,13 +1,16 @@
 package com.hfad.restaurantsforme;
 
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class CategorieAdapter extends BaseAdapter {
@@ -54,7 +57,14 @@ public class CategorieAdapter extends BaseAdapter {
 
         //4
 
-        DbBitmapUtility.setImageViewWithByteArray(image,categorieFood.getImage());
+
+        //5
+    String[] path = categorieFood.getUrlImage();
+        Log.d("msg", String.valueOf(path));
+
+        Picasso.with(mContext).load("https://still-stream-25624.herokuapp.com/" +
+                categorieFood.getUrlImage()[0]).into(image);
+//        DbBitmapUtility.setImageViewWithByteArray(image,categorieFood.getImage());
         nom.setText(categorieFood.getNom());
 
        return convertView;

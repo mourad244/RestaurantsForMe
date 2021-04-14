@@ -1,35 +1,41 @@
 package com.hfad.restaurantsforme;
 
+import com.google.gson.annotations.SerializedName;
+
 public class CategorieFood {
-    private int id;
+    @SerializedName("_id")
+    private String id;
+
     private String nom;
-    private byte[] image;
+
+    @SerializedName("images")
+    private String[] urlImage;
 
 
     public CategorieFood(){}
 
-    public CategorieFood(String nom, byte[] image ){
+    public CategorieFood(String nom, String[] urlImage){
         this.nom = nom;
-        this.image = image;
+        this.urlImage = urlImage;
     }
 
-    public CategorieFood(int id,  String nom,byte[] image){
+    public CategorieFood(String id,  String nom,String[] image){
         this.id = id;
         this.nom = nom;
-        this.image = image;
+        this.urlImage = image;
 
     }
 
-    public int getId() { return id; }
+    public String getId() { return id; }
 
-    public void setId(int id) { this.id = id; }
+    public void setId(String id) { this.id = id; }
 
-    public byte[] getImage() {
-        return image;
+    public String[] getUrlImage() {
+        return urlImage;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setUrlImage(String[] urlImage) {
+        this.urlImage = urlImage;
     }
 
     public String getNom() {

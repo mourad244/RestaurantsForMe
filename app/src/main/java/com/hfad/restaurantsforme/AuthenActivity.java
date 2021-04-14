@@ -59,17 +59,15 @@ public class AuthenActivity extends AppCompatActivity {
     @OnClick(R.id.btnLogin)
 
     public void onClick(View v) {
-        Log.d("mss","done");
         String email = Name.getText().toString();
         String password = Password.getText().toString();
 
         Login login = new Login(email,password);
 
-        Call call = retrofitServices.login(login);
-        call.enqueue(new Callback<ResponseBody>() {
+        Call<String> call = retrofitServices.login(login);
+        call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Response<ResponseBody> response,Retrofit retrofit) {
-                Log.d("mss",  response.body());
+            public void onResponse(Call<String> call,Response<String> response) {
 
                 if(response.isSuccessful()){
                     //save username and password
@@ -82,7 +80,7 @@ public class AuthenActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call call, Throwable t) {
+            public void onFailure(Call <String> call, Throwable t) {
                 t.printStackTrace();
             }
         });

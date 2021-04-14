@@ -55,7 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Categorie_food table create statement
     private static final String CREATE_TABLE_CATEGORIE_FOOD = "CREATE TABLE "+
             TABLE_CATEGORIE_FOOD + "("+
-            KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "+
+            KEY_ID + " TEXT PRIMARY KEY NOT NULL, "+
             KEY_NOM + " TEXT, " +
             KEY_IMAGE + " INTEGER"+")";
 
@@ -219,8 +219,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(c.moveToFirst()){
             do{
                 CategorieFood categorieFood = new CategorieFood();
-                categorieFood.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-                if (categorieFood.getId() >=1){
+                categorieFood.setId(c.getString(c.getColumnIndex(KEY_ID)));
+                if (!categorieFood.getId().isEmpty()){
                     return true;
                 }
                 // add to restaurants list
@@ -286,7 +286,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(KEY_NOM, categorieFood.getNom());
-        values.put(KEY_IMAGE, categorieFood.getImage());
+//        values.put(KEY_IMAGE, categorieFood.getUrlImage());
 
         // insert row
         long categorieFood_id = db.insert(TABLE_CATEGORIE_FOOD,null,values);
@@ -354,9 +354,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (c.moveToFirst()){
             do{
                 CategorieFood categorie = new CategorieFood();
-                categorie.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+                categorie.setId(c.getString(c.getColumnIndex(KEY_ID)));
                 categorie.setNom(c.getString(c.getColumnIndex(KEY_NOM)));
-                categorie.setImage(c.getBlob(c.getColumnIndex(KEY_IMAGE)));
+//                categorie.setUrlImage(c.getString(c.getColumnIndex(KEY_IMAGE)));
 
                 // adding to categorie food list
                 categorieFoods.add(categorie);
@@ -475,9 +475,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             c.moveToFirst();
 
         CategorieFood categorie = new CategorieFood();
-        categorie.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+        categorie.setId(c.getString(c.getColumnIndex(KEY_ID)));
         categorie.setNom(c.getString(c.getColumnIndex(KEY_NOM)));
-        categorie.setImage(c.getBlob(c.getColumnIndex(KEY_IMAGE)));
+//        categorie.setUrlImage(c.getString(c.getColumnIndex(KEY_IMAGE)));
 
         return categorie;
     }

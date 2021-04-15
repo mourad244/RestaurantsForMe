@@ -2,14 +2,10 @@ package com.hfad.restaurantsforme;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;

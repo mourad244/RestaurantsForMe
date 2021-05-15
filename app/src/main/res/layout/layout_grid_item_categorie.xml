@@ -18,7 +18,7 @@
             android:id="@+id/tv_categorie_nom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="17sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:paddingTop="4dp"
             android:paddingLeft="8dp"

@@ -17,6 +17,8 @@ public interface RetrofitServices {
     @GET("/restauapi/categoriesfood")
     Call <List<CategorieFood>> getCategoriesFood();
 
+    @GET("/restauapi/restaurants")
+    Call<List<Restaurant>> getRestaurants();
 }
 
 

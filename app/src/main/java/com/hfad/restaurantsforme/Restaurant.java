@@ -1,22 +1,27 @@
 package com.hfad.restaurantsforme;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Restaurant {
-    private int id;
+    @SerializedName("_id")
+    private String id;
     private String nom;
-    private byte[] image;
+    @SerializedName("images")
+    private String[] image;
     private String description;
     private String h_ouverture;
     private String h_fermeture;
     private String telephone;
-    private byte[] QR_code;
+    @SerializedName("qrCode")
+    private String[] QR_code;
     private Double longitude;
     private Double latitude;
 
 
     public Restaurant (){};
 
-    public Restaurant (String nom, byte[] image, String description, String h_ouverture,
-                       String h_fermeture, String telephone, byte[] QR_code,Double latitude,
+    public Restaurant (String nom, String[] image, String description, String h_ouverture,
+                       String h_fermeture, String telephone, String[] QR_code,Double latitude,
                        Double longitude ){
         this.nom = nom;
         this.image = image;
@@ -28,7 +33,7 @@ public class Restaurant {
         this.longitude = longitude;
         this.latitude = latitude;
     }
-    public Restaurant (String nom, byte[] image, String description, String h_ouverture,
+    public Restaurant (String nom, String[] image, String description, String h_ouverture,
                        String h_fermeture, String telephone, Double latitude,Double longitude
                        ){
         this.nom = nom;
@@ -37,12 +42,13 @@ public class Restaurant {
         this.h_ouverture = h_ouverture;
         this.h_fermeture = h_fermeture;
         this.telephone = telephone;
+
         this.longitude = longitude;
         this.latitude = latitude;
     }
 
-    public Restaurant (int id, String nom, byte[] image, String description, String h_ouverture,
-                       String h_fermeture, String telephone, byte[] QR_code,
+    public Restaurant (String id, String nom, String[] image, String description, String h_ouverture,
+                       String h_fermeture, String telephone, String[] QR_code,
                        Double latitude, Double longitude){
         this.id = id;
         this.nom = nom;
@@ -56,17 +62,17 @@ public class Restaurant {
         this.latitude = latitude;
     }
 
-    public int getId() { return id; }
+    public String getId() { return id; }
 
-    public void setId(int id) { this.id = id; }
+    public void setId(String id) { this.id = id; }
 
     public String getNom() { return nom; }
 
     public void setNom(String nom) { this.nom = nom; }
 
-    public byte[] getImage() { return image; }
+    public String[] getImage() { return image; }
 
-    public void setImage(byte[] image) { this.image = image; }
+    public void setImage(String[] image) { this.image = image; }
 
     public String getDescription() { return description; }
 
@@ -84,9 +90,9 @@ public class Restaurant {
 
     public void setTelephone(String telephone) { this.telephone = telephone; }
 
-    public byte[] getQR_code() { return QR_code; }
+    public String[] getQR_code() { return QR_code; }
 
-    public void setQR_code(byte[] QR_code) { this.QR_code = QR_code; }
+    public void setQR_code(String[] QR_code) { this.QR_code = QR_code; }
 
     public Double getLongitude() { return longitude; }
 

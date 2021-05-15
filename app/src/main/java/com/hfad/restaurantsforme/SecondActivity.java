@@ -21,8 +21,8 @@ public class SecondActivity extends AppCompatActivity {
             .create(RetrofitServices.class);
 
     CategorieAdapter categorieAdapter;
-
     List<CategorieFood> categorieFoodList;
+
     GridView gridView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

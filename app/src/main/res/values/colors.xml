@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="Deep_grey">#7E8389</color>
+    <color name="Black_Tortoise">#424242</color>
+    <color name="Bronze_Ritual">#D97953</color>
+    <color name="Red_Vermilion_Bird">#e92F48</color>
+    <color name="Silver_Sycee">#A0A8B1</color>
+    <color name="Yellow_Dragon">#FFC107</color>
+    <color name="To_Go_Container">#F2F2F2</color>
 </resources>

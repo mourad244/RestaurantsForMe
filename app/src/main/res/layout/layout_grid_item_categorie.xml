@@ -19,9 +19,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
+            android:textColor="@color/Black_Tortoise"
             android:textStyle="bold"
             android:paddingTop="4dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
+            android:shadowColor="@color/Silver_Sycee"
+            android:shadowDx="-1"
+            android:shadowDy="-1"
+            android:shadowRadius="1"
             android:gravity="center_horizontal"/>
 </LinearLayout>

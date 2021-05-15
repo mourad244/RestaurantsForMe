@@ -2,17 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".AuthenActivity">
 
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
-        android:layout_height="222dp"
-        app:srcCompat="@drawable/icon_restau" />
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/admin_background" />
 
 
     <TextView
@@ -22,9 +24,9 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:visibility="invisible"
         android:text="@string/erreur"
-        android:textColor="#FD0000" />
+        android:textColor="#FD0000"
+        android:visibility="invisible" />
 
 
     <EditText
@@ -33,15 +35,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:ems="10"
-        android:hint="@string/nom"
+        android:background="@drawable/custom_input"
+        android:drawableStart="@drawable/custom_person_ic"
         android:drawableLeft="@drawable/ic_baseline_person_24"
         android:drawablePadding="10dp"
-        android:padding="15dp"
-        android:drawableStart="@drawable/custom_person_ic"
-        android:background="@drawable/custom_input"
+        android:ems="10"
+        android:hint="@string/nom"
         android:inputType="textPersonName"
-        />
+        android:padding="15dp" />
 
     <EditText
         android:id="@+id/sPassword"
@@ -49,15 +50,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:background="@drawable/custom_input"
+        android:drawableStart="@drawable/custom_lock_ic"
+        android:drawableLeft="@drawable/ic_baseline_lock_24"
+        android:drawablePadding="10dp"
         android:ems="10"
         android:hint="@string/password"
-        android:drawablePadding="10dp"
-        android:drawableStart="@drawable/custom_lock_ic"
-        android:background="@drawable/custom_input"
-        android:padding="15dp"
-        android:drawableLeft="@drawable/ic_baseline_lock_24"
         android:inputType="textPassword"
-        />
+        android:padding="15dp" />
 
 
     <CheckBox
@@ -74,9 +74,9 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/btnLog"
         android:layout_marginTop="10dp"
-
+        android:backgroundTint="@color/Bronze_Ritual"
+        android:text="@string/btnLog"
 
 
         />
@@ -89,8 +89,6 @@
         android:layout_marginTop="50dp"
         android:autoLink="all"
         android:text="@string/forgotpass" />
-
-
 
 
 </LinearLayout>

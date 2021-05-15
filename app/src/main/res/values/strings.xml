@@ -9,4 +9,6 @@
     <string name="password">Password</string>
     <string name="nom">Name</string>
     <string name="pizza">pizza</string>
+    <string name="categorie_des_restaurants">Catégories Des Restaurants</string>
+    <string name="login">Login</string>
 </resources>

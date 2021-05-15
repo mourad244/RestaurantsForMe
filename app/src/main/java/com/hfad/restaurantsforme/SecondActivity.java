@@ -28,7 +28,10 @@ public class SecondActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
-
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
         gridView = findViewById(R.id.gvFood);
 
         Call<List<CategorieFood>> call = retrofitServices.getCategoriesFood();
@@ -60,8 +63,6 @@ public class SecondActivity extends AppCompatActivity {
     }
 
     public void login(View view){
-
-
         //show login form
         Intent intent=new Intent(this, AuthenActivity.class);
         startActivity(intent);
@@ -76,6 +77,4 @@ public class SecondActivity extends AppCompatActivity {
         Intent intent=new Intent(this, Authentification.class);
         startActivity(intent);
     }*/
-
-
 }

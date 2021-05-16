@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#D3BAB0"
     android:orientation="vertical"
     >
     <fragment
@@ -19,19 +20,23 @@
         android:id="@+id/appeler"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/Bronze_Ritual"
         android:text="Appeler restaurant"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/Bronze_Ritual"
         android:text="Scanner QRCode"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/Bronze_Ritual"
         android:text="Afficher menu"/>
     <Button
         android:id="@+id/itineraire"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/Bronze_Ritual"
         android:text="Afficher itinéraire"/>
 </LinearLayout>
 

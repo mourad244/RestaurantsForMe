@@ -11,4 +11,5 @@
     <string name="pizza">pizza</string>
     <string name="categorie_des_restaurants">Catégories Des Restaurants</string>
     <string name="login">Login</string>
+    <string name="Liste_Restaurants">Liste des Restaurants</string>
 </resources>

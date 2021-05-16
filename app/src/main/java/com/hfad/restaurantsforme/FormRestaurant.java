@@ -72,7 +72,7 @@ public class FormRestaurant extends Activity {
                 byte[] imageQRCodeByte = DbBitmapUtility.imageViewToByte(imageRestau);
 
 
-                Restaurant restaurant = new Restaurant(nomRestau.getText().toString(),
+               /* Restaurant restaurant = new Restaurant(nomRestau.getText().toString(),
                         imageRestauByte, descriptionRestau.getText().toString(),
                         ouvertureRestau.getText().toString(),
                         fermetureRestau.getText().toString(),
@@ -82,7 +82,7 @@ public class FormRestaurant extends Activity {
                 db= new DatabaseHelper(getApplicationContext());
                 db.createRestaurant(restaurant);
                 Intent intent = new Intent(FormRestaurant.this,AdminActivity.class);
-                startActivity(intent);
+                startActivity(intent);*/
             }
         });
     }

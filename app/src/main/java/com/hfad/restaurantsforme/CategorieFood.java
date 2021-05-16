@@ -19,10 +19,10 @@ public class CategorieFood {
         this.urlImage = urlImage;
     }
 
-    public CategorieFood(String id,  String nom,String[] image){
+    public CategorieFood(String id,  String nom,String[] urlImage){
         this.id = id;
         this.nom = nom;
-        this.urlImage = image;
+        this.urlImage = urlImage;
 
     }
 

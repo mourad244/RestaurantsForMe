@@ -2,12 +2,15 @@ package com.hfad.restaurantsforme;
 
 import android.Manifest;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +20,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.squareup.picasso.Picasso;
+
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
@@ -40,19 +47,29 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant>  {
         this.mResource =resource;
     }
 
+
+    @SuppressLint("SetTextI18n")
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
         LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
         convertView=layoutInflater.inflate(R.layout.list_restaurant,parent,false);
+
         ImageView image=  convertView.findViewById(R.id.image);
+        image.setClipToOutline(true);
         TextView nom =convertView.findViewById(R.id.nom);
         TextView distance =convertView.findViewById(R.id.distance);
         TextView status = convertView.findViewById(R.id.status);
 
-        DbBitmapUtility.setImageViewWithByteArray(image,getItem(position).getImage());
+        // imageview
+        String[] path = getItem(position).getUrlImage();
+        if(path.length != 0){
+            Picasso.with(mContext).load("https://still-stream-25624.herokuapp.com/"
+                    +getItem(position).getUrlImage()[0]).into(image);
+            /*DbBitmapUtility.setImageViewWithByteArray(image,getItem(position).getImage());*/
 
+        }
         nom.setText(getItem(position).getNom());
 
         // -----------------status (calculating hour)-------------------- ----
@@ -68,15 +85,24 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant>  {
         int h_fermeture = Integer.parseInt(splitFermeture[0]);
 
         if(hour > h_ouverture && hour < h_fermeture ){
+            status.setBackground(ContextCompat.getDrawable(mContext,R.drawable.green_background));
             status.setText("Ouvert");
         }
         else if( hour == h_ouverture) {
             int m_ouverture = Integer.parseInt(splitOuverture[1]);
             int m_fermeture = Integer.parseInt(splitFermeture[1]);
-            if (min > m_ouverture || min < m_fermeture)
+            if (min > m_ouverture || min < m_fermeture){
+                status.setBackground(ContextCompat.getDrawable(mContext,R.drawable.green_background));
                 status.setText("Ouvert");
-            else status.setText("Fermé");
-        } else status.setText("Fermé");
+            }
+            else {
+                status.setBackground(ContextCompat.getDrawable(mContext,R.drawable.red_background));
+                status.setText("Fermé");
+            }
+        } else {
+            status.setBackground(ContextCompat.getDrawable(mContext,R.drawable.red_background));
+            status.setText("Fermé");
+            };
 
         //-----------------****************---------------------
 
@@ -88,12 +114,18 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant>  {
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED ) {
 
+
+
             fusedLocationProviderClient.getLastLocation()
                     .addOnCompleteListener(new OnCompleteListener<Location>() {
 
 
+
+                        @SuppressLint("ResourceAsColor")
                         @Override
                         public void onComplete(@NonNull Task<Location> task) {
+
+
                             // Initialize location
                             Location location = task.getResult();
                             if(location != null){
@@ -115,13 +147,13 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant>  {
                                             getItem(position).getLatitude(),
                                             getItem(position).getLongitude()
                                             ,results);
-
                                     if (results[0]>1000){
                                         distance.setText(String.format("%.2f",results[0]/1000)  +" Km");
                                     }
                                     else
                                     distance.setText((int)results[0]+" m");
                                 } catch (IOException e) {
+
                                     e.printStackTrace();
                                 }
                             }

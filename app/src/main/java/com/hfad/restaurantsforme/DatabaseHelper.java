@@ -318,14 +318,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(c.moveToFirst()){
             do{
                 Restaurant restaurant = new Restaurant();
-                restaurant.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+                restaurant.setId(c.getString(c.getColumnIndex(KEY_ID)));
                 restaurant.setNom(c.getString(c.getColumnIndex(KEY_NOM)));
-                restaurant.setImage(c.getBlob(c.getColumnIndex(KEY_IMAGE)));
+//                restaurant.setUrlImage(c.getBlob(c.getColumnIndex(KEY_IMAGE)));
                 restaurant.setDescription(c.getString(c.getColumnIndex(KEY_DESCRIPTION)));
                 restaurant.setH_fermeture(c.getString(c.getColumnIndex(KEY_H_FERMETURE)));
                 restaurant.setH_ouverture(c.getString(c.getColumnIndex(KEY_H_OUVERTURE)));
                 restaurant.setTelephone(c.getString(c.getColumnIndex(KEY_TELEPHONE)));
-                restaurant.setQR_code(c.getBlob(c.getColumnIndex(KEY_QR_CODE)));
+//                restaurant.setQR_code(c.getBlob(c.getColumnIndex(KEY_QR_CODE)));
                 restaurant.setLongitude(c.getDouble(c.getColumnIndex(KEY_LONGITUDE)));
                 restaurant.setLatitude(c.getDouble(c.getColumnIndex(KEY_LATITUDE)));
 
@@ -372,12 +372,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues values= new ContentValues();
         values.put(KEY_NOM, restaurant.getNom());
-        values.put(KEY_IMAGE, restaurant.getImage());
+//        values.put(KEY_IMAGE, restaurant.getUrlImage());
         values.put(KEY_DESCRIPTION,restaurant.getDescription());
         values.put(KEY_H_OUVERTURE,restaurant.getH_ouverture());
         values.put(KEY_H_FERMETURE,restaurant.getH_fermeture());
         values.put(KEY_TELEPHONE,restaurant.getTelephone());
-        values.put(KEY_QR_CODE, restaurant.getQR_code());
+//        values.put(KEY_QR_CODE, restaurant.getQR_code());
         values.put(KEY_LONGITUDE, restaurant.getLongitude());
         values.put(KEY_LATITUDE, restaurant.getLatitude());
         // insert row
@@ -396,12 +396,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values= new ContentValues();
 
         values.put(KEY_NOM, restaurant.getNom());
-        values.put(KEY_IMAGE, restaurant.getImage());
+//        values.put(KEY_IMAGE, restaurant.getUrlImage());
         values.put(KEY_DESCRIPTION,restaurant.getDescription());
         values.put(KEY_H_OUVERTURE,restaurant.getH_ouverture());
         values.put(KEY_H_FERMETURE,restaurant.getH_fermeture());
         values.put(KEY_TELEPHONE,restaurant.getTelephone());
-        values.put(KEY_QR_CODE, restaurant.getQR_code());
+//        values.put(KEY_QR_CODE, restaurant.getQR_code());
         values.put(KEY_LONGITUDE, restaurant.getLongitude());
         values.put(KEY_LATITUDE, restaurant.getLatitude());
         // insert row
@@ -427,14 +427,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(c.moveToFirst()){
             do{
                 Restaurant r = new Restaurant();
-                r.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+                r.setId(c.getString(c.getColumnIndex(KEY_ID)));
                 r.setNom(c.getString(c.getColumnIndex(KEY_NOM)));
-                r.setImage(c.getBlob(c.getColumnIndex(KEY_IMAGE)));
+//                r.setUrlImage(c.getBlob(c.getColumnIndex(KEY_IMAGE)));
                 r.setDescription(c.getString(c.getColumnIndex(KEY_DESCRIPTION)));
                 r.setH_ouverture(c.getString(c.getColumnIndex(KEY_H_OUVERTURE)));
                 r.setH_fermeture(c.getString(c.getColumnIndex(KEY_H_FERMETURE)));
                 r.setTelephone(c.getString(c.getColumnIndex(KEY_TELEPHONE)));
-                r.setQR_code(c.getBlob(c.getColumnIndex(KEY_QR_CODE)));
+//                r.setQR_code(c.getBlob(c.getColumnIndex(KEY_QR_CODE)));
                 r.setLongitude(c.getDouble(c.getColumnIndex(KEY_LONGITUDE)));
                 r.setLatitude(c.getDouble(c.getColumnIndex(KEY_LATITUDE)));
 
@@ -496,14 +496,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(c != null)
             c.moveToFirst();
         Restaurant restaurant = new Restaurant();
-        restaurant.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+        restaurant.setId(c.getString(c.getColumnIndex(KEY_ID)));
         restaurant.setNom(c.getString(c.getColumnIndex(KEY_NOM)));
-        restaurant.setImage(c.getBlob(c.getColumnIndex(KEY_IMAGE)));
+//        restaurant.setUrlImage(c.getBlob(c.getColumnIndex(KEY_IMAGE)));
         restaurant.setDescription(c.getString(c.getColumnIndex(KEY_DESCRIPTION)));
         restaurant.setH_ouverture(c.getString(c.getColumnIndex(KEY_H_OUVERTURE)));
         restaurant.setH_fermeture(c.getString(c.getColumnIndex(KEY_H_FERMETURE)));
         restaurant.setTelephone(c.getString(c.getColumnIndex(KEY_TELEPHONE)));
-        restaurant.setQR_code(c.getBlob(c.getColumnIndex(KEY_QR_CODE)));
+//        restaurant.setQR_code(c.getBlob(c.getColumnIndex(KEY_QR_CODE)));
         restaurant.setLongitude(c.getDouble(c.getColumnIndex(KEY_LONGITUDE)));
         restaurant.setLatitude(c.getDouble(c.getColumnIndex(KEY_LATITUDE)));
         db.close();

@@ -4,12 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#D3BAB0"
     android:orientation="vertical"
     android:focusable="true"
     android:focusableInTouchMode="true"
     tools:context=".SecondActivity">
 
     <requestFocus />
+    <TextView
+        android:id="@+id/titre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="32sp"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/Bronze_Ritual"
+        android:text="@string/Liste_Restaurants"
+        android:shadowColor="@color/Deep_grey"
+        android:shadowDx="-3"
+        android:shadowDy="-3"
+        android:shadowRadius="1"
+        android:layout_marginTop="10dp"
+        />
 
     <EditText android:id="@+id/search"
         android:layout_width="match_parent"
@@ -18,17 +34,18 @@
         android:focusable="auto"
         android:layout_gravity="center"
         android:textSize="20sp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:textColor="@android:color/black"
         android:hint="Chercher un restaurant ..."
+        android:background="@drawable/search_rounded"
         />
 
     <ListView android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

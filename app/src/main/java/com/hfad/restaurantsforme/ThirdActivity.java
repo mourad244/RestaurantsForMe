@@ -53,11 +53,17 @@ public class ThirdActivity extends Activity {
         super.onResume();
         ButterKnife.bind(this);
         filteredRestaurant = findViewById(R.id.search);
+        Intent intent = getIntent();
+        String id = intent.getStringExtra("foodCategorie_id");
 
-        Call<List<Restaurant>> call = retrofitServices.getRestaurants();
+
+
+        Call<List<Restaurant>> call = retrofitServices.getRestaurantsByCategorie(id);
+
         call.enqueue(new Callback<List<Restaurant>>() {
             @Override
             public void onResponse(Call<List<Restaurant>> call, Response<List<Restaurant>> response) {
+
                 restaurants = response.body();
 
                 restaurantAdapter = new RestaurantAdapter(ThirdActivity.this,R.layout.list_restaurant,restaurants);
@@ -69,23 +75,6 @@ public class ThirdActivity extends Activity {
 
             }
         });
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent1 = new Intent(ThirdActivity.this,MapsActivity.class);
-
-                String restaurant_id = restaurants.get(position).getId();
-
-                intent1.putExtra("restaurant_id",restaurant_id);
-                startActivity(intent1);
-            }
-        });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         filteredRestaurant.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -106,13 +95,25 @@ public class ThirdActivity extends Activity {
             @Override
             public void afterTextChanged(Editable s) {}
         });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent1 = new Intent(ThirdActivity.this,MapsActivity.class);
+
+                String restaurant_id = restaurants.get(position).getId();
+                intent1.putExtra("restaurant_id",restaurant_id);
+                startActivity(intent1);
+            }
+        });
     }
+
     private List<Restaurant> searching(String text){
         List<Restaurant> filteredRestaurants = new ArrayList();
         boolean founded;
 
         for(int i =0; i < restaurants.size();i++){
-            founded = restaurants.get(i).getNom().toLowerCase().contains(text);
+            founded = restaurants.get(i).getNom().toLowerCase().contains(text.toLowerCase());
             if (founded) filteredRestaurants.add(restaurants.get(i));
         }
         return filteredRestaurants;

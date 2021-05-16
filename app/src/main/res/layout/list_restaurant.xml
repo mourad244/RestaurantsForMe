@@ -8,35 +8,44 @@
 
     <ImageView
         android:id="@+id/image"
-        android:scaleType="fitStart"
-        android:layout_width="120dp"
-        android:layout_height="60dp" />
+        android:scaleType="fitXY"
+        android:layout_width="220dp"
+        android:layout_height="130dp"
+        android:background="@drawable/border_images"
+        android:outlineProvider="background"
+        />
 
     <TextView
         android:id="@+id/nom"
+        android:text="nom"
         android:textStyle="bold"
-        android:layout_toEndOf="@id/image"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@color/Black_Tortoise"
         android:textSize="22sp"
+        android:layout_below="@+id/image"
          />
 
     <TextView android:id="@+id/distance"
-        android:layout_alignParentEnd="true"
+        android:text="distance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/darker_gray"
+        android:layout_alignParentEnd="true"
+        android:textColor="@color/Black_Tortoise"
+        android:layout_alignTop="@+id/image"
+        android:textSize="20sp"
         />
 
     <TextView android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:textColor="@color/white"
+        android:layout_alignBottom="@+id/image"
+        android:text="status"
+        android:padding="7dp"
+        android:textSize="15sp"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/distance"
+        android:textAlignment="viewEnd"
         />
 
 </RelativeLayout>

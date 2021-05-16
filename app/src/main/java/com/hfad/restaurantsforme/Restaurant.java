@@ -7,13 +7,13 @@ public class Restaurant {
     private String id;
     private String nom;
     @SerializedName("images")
-    private String[] image;
+    private String[] urlImage;
     private String description;
     private String h_ouverture;
     private String h_fermeture;
     private String telephone;
     @SerializedName("qrCode")
-    private String[] QR_code;
+    private String QR_code;
     private Double longitude;
     private Double latitude;
 
@@ -21,10 +21,10 @@ public class Restaurant {
     public Restaurant (){};
 
     public Restaurant (String nom, String[] image, String description, String h_ouverture,
-                       String h_fermeture, String telephone, String[] QR_code,Double latitude,
+                       String h_fermeture, String telephone, String QR_code,Double latitude,
                        Double longitude ){
         this.nom = nom;
-        this.image = image;
+        this.urlImage = image;
         this.description = description;
         this.h_ouverture = h_ouverture;
         this.h_fermeture = h_fermeture;
@@ -37,7 +37,7 @@ public class Restaurant {
                        String h_fermeture, String telephone, Double latitude,Double longitude
                        ){
         this.nom = nom;
-        this.image = image;
+        this.urlImage = image;
         this.description = description;
         this.h_ouverture = h_ouverture;
         this.h_fermeture = h_fermeture;
@@ -48,11 +48,11 @@ public class Restaurant {
     }
 
     public Restaurant (String id, String nom, String[] image, String description, String h_ouverture,
-                       String h_fermeture, String telephone, String[] QR_code,
+                       String h_fermeture, String telephone, String QR_code,
                        Double latitude, Double longitude){
         this.id = id;
         this.nom = nom;
-        this.image = image;
+        this.urlImage = image;
         this.description = description;
         this.h_ouverture = h_ouverture;
         this.h_fermeture = h_fermeture;
@@ -70,9 +70,9 @@ public class Restaurant {
 
     public void setNom(String nom) { this.nom = nom; }
 
-    public String[] getImage() { return image; }
+    public String[] getUrlImage() { return urlImage; }
 
-    public void setImage(String[] image) { this.image = image; }
+    public void setUrlImage(String[] urlImage) { this.urlImage = urlImage; }
 
     public String getDescription() { return description; }
 
@@ -90,9 +90,9 @@ public class Restaurant {
 
     public void setTelephone(String telephone) { this.telephone = telephone; }
 
-    public String[] getQR_code() { return QR_code; }
+    public String getQR_code() { return QR_code; }
 
-    public void setQR_code(String[] QR_code) { this.QR_code = QR_code; }
+    public void setQR_code(String QR_code) { this.QR_code = QR_code; }
 
     public Double getLongitude() { return longitude; }
 

@@ -59,12 +59,12 @@ public class CategorieAdapter extends BaseAdapter {
 
 
         //5
-    String[] path = categorieFood.getUrlImage();
-        if(path.length !=0){
-            Picasso.with(mContext).load("https://still-stream-25624.herokuapp.com/" +
-                    categorieFood.getUrlImage()[0]).into(image);
-//        DbBitmapUtility.setImageViewWithByteArray(image,categorieFood.getImage());
-            nom.setText(categorieFood.getNom());
+        String[] path = categorieFood.getUrlImage();
+            if(path.length !=0){
+                Picasso.with(mContext).load("https://still-stream-25624.herokuapp.com/" +
+                        categorieFood.getUrlImage()[0]).into(image);
+    //        DbBitmapUtility.setImageViewWithByteArray(image,categorieFood.getImage());
+                nom.setText(categorieFood.getNom());
         }
        return convertView;
     }

@@ -17,8 +17,11 @@ public interface RetrofitServices {
     @GET("/restauapi/categoriesfood")
     Call <List<CategorieFood>> getCategoriesFood();
 
-    @GET("/restauapi/restaurants")
-    Call<List<Restaurant>> getRestaurants();
+    @GET("/restauapi/restaurants/categoriefood/{id}")
+    Call<List<Restaurant>> getRestaurantsByCategorie(@Path("id") String id);
+
+    @GET("/restauapi/restaurants/{id}")
+    Call <Restaurant> getRestaurant(@Path("id") String id);
 }
 
 
